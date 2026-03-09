@@ -29,7 +29,7 @@ pipeline{
         stage('Restart Server') {
             steps {
                 sh '''
-                pm2 restart instagram-api || pm2 start server.js --name instagram-api
+                pm2 restart instagram-api || pm2 start index.js --name instagram-api
                 '''
             }
         }
