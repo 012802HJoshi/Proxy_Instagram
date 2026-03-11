@@ -25,9 +25,9 @@ const instagram = require("./Controller/instagram.js");
 
 app.use("/instagram", instagram);
 
-// app.use("/", (req, res) => {
-//   res.status(200).send("Welcome to Rareprob Instagram Downloader API");
-// });
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to Rareprob Instagram Downloader API");
+});
 
 app.get('/health', (req, res) => {
   const cache = getAllCachedData();
