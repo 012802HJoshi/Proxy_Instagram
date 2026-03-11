@@ -34,7 +34,13 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p $APP_DIR
-                    rsync -av --delete --exclude='.env' ./ $APP_DIR/
+
+                    rsync -av --delete \
+                    --exclude='.git' \
+                    --exclude='node_modules' \
+                    --exclude='.env' \
+                    ./ $APP_DIR/
+
                     cd $APP_DIR
                     npm install --omit=dev
                 '''
@@ -45,7 +51,10 @@ pipeline {
             steps {
                 sh '''
                     cd $APP_DIR
-                    pm2 restart instagram-api || pm2 start index.js --name instagram-api
+
+                    pm2 reload instagram-api || pm2 start npm --name instagram-api -- run start:prod
+
+                    pm2 save
                 '''
             }
         }
