@@ -21,7 +21,9 @@ app.use(cors());
 app.use(express.json());
 
 const port = 4141;
+const instagram = require("./Controller/instagram.js");
 
+app.use("/instagram", instagram);
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to Rareprob Instagram Downloader API");
