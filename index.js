@@ -1,4 +1,4 @@
-require('dotenv').config();
+const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
@@ -53,6 +53,8 @@ const countryCategoryMap = {
 };
 
 const app = express();
+
+dotenv.config()
 
 const apiKey = process.env.YOUTUBE_API_KEY;
 const refreshOnStart = String(process.env.REFRESH_ON_START || 'true').toLowerCase() === 'true';

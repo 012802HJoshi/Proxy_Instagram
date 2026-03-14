@@ -38,7 +38,6 @@ pipeline {
                     rsync -av --delete \
                     --exclude='.git' \
                     --exclude='node_modules' \
-                    --exclude='.env' \
                     ./ $APP_DIR/
 
                     cd $APP_DIR
