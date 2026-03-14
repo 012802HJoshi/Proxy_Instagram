@@ -12,6 +12,46 @@ const {
   CACHE_FILE
 } = require('./services/youtubeService');
 
+const countryCategoryMap = {
+  IN: [
+    'cricket_shorts',
+    'ipl_highlights',
+    'tech_reviews_india',
+    'mobile_tips_tricks',
+    'bollywood_news',
+    'indian_street_food',
+    'indian_comedy',
+    'motivation_hindi',
+    'gaming_india',
+    'finance_india'
+  ],
+
+  KR: [
+    'kpop_shorts',
+    'korean_drama_clips',
+    'korean_street_food',
+    'kbeauty_tips',
+    'korean_dance',
+    'korean_vlogs'
+  ],
+
+  BR: [
+    'football_brazil',
+    'brazil_funny',
+    'brazil_street_food',
+    'brazil_dance',
+    'brazil_lifestyle'
+  ],
+
+  GLOBAL: [
+    'funny_animals',
+    'satisfying',
+    'before_after',
+    'magic_tricks',
+    'quick_diy'
+  ]
+};
+
 const app = express();
 
 const apiKey = process.env.YOUTUBE_API_KEY;
@@ -79,6 +119,37 @@ app.post('/api/refresh', async (req, res) => {
       error: error.message
     });
   }
+});
+
+app.get('/api/feed/:countryCode', (req, res) => {
+  const countryCode = req.params.countryCode.toUpperCase();
+
+  const categoryKeys = countryCategoryMap[countryCode];
+
+  if (!categoryKeys) {
+    return res.status(404).json({
+      message: 'Country not supported'
+    });
+  }
+
+  let videos = [];
+
+  categoryKeys.forEach((key) => {
+    const category = getCategoryData(key);
+
+    if (category && category.videos) {
+      videos = videos.concat(category.videos);
+    }
+  });
+
+  // shuffle videos for feed experience
+  videos.sort(() => Math.random() - 0.5);
+
+  res.json({
+    country: countryCode,
+    totalVideos: videos.length,
+    videos
+  });
 });
 
 async function bootstrap() {
