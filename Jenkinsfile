@@ -49,9 +49,9 @@ pipeline {
                 sh '''
                     cd $APP_DIR
 
-                    sudo pm2 reload instagram-api || sudo pm2 start npm --name instagram-api -- run start:prod
+                    pm2 reload instagram-api || pm2 start npm --name instagram-api -- run start:prod
 
-                    sudo pm2 save
+                    pm2 save
                 '''
             }
         }
