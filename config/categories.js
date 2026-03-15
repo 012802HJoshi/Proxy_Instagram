@@ -45,12 +45,23 @@ const brazilCategories = [
   { key: 'brazil_music', query: 'Brazil Music Shorts', region: 'BR', videoDuration: 'short', order: 'relevance' }
 ];
 
+const fitnessCategories = [
+  { key: 'home_workout', query: 'Home Workout Shorts', videoDuration: 'short', order: 'relevance' },
+  { key: 'gym_tips', query: 'Gym Tips and Tricks', videoDuration: 'short', order: 'relevance' },
+  { key: 'weight_loss', query: 'Weight Loss Tips', videoDuration: 'short', order: 'relevance' },
+  { key: 'yoga_shorts', query: 'Yoga Shorts', videoDuration: 'short', order: 'relevance' },
+  { key: 'bodybuilding', query: 'Bodybuilding Motivation', videoDuration: 'short', order: 'relevance' },
+  { key: 'healthy_eating', query: 'Healthy Eating Habits', videoDuration: 'short', order: 'relevance' },
+  { key: 'morning_routine', query: 'Morning Fitness Routine', videoDuration: 'short', order: 'relevance' },
+  { key: 'stretching', query: 'Stretching Exercises', videoDuration: 'short', order: 'relevance' }
+];
 
 const categories = [
   ...globalCategories,
   ...indiaCategories,
   ...koreaCategories,
-  ...brazilCategories
+  ...brazilCategories,
+  ...fitnessCategories
 ];
 
 module.exports = categories;

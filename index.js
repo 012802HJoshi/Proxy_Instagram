@@ -25,7 +25,6 @@ const countryCategoryMap = {
     'gaming_india',
     'finance_india'
   ],
-
   KR: [
     'kpop_shorts',
     'korean_drama_clips',
@@ -34,7 +33,6 @@ const countryCategoryMap = {
     'korean_dance',
     'korean_vlogs'
   ],
-
   BR: [
     'football_brazil',
     'brazil_funny',
@@ -42,7 +40,6 @@ const countryCategoryMap = {
     'brazil_dance',
     'brazil_lifestyle'
   ],
-
   GLOBAL: [
     'funny_animals',
     'satisfying',
@@ -52,9 +49,21 @@ const countryCategoryMap = {
   ]
 };
 
+// ✅ All fitness category keys (must match keys in categories.js)
+const fitnessCategoryKeys = [
+  'home_workout',
+  'gym_tips',
+  'weight_loss',
+  'yoga_shorts',
+  'bodybuilding',
+  'healthy_eating',
+  'morning_routine',
+  'stretching'
+];
+
 const app = express();
 
-dotenv.config()
+dotenv.config();
 
 const apiKey = process.env.YOUTUBE_API_KEY;
 const refreshOnStart = String(process.env.REFRESH_ON_START || 'true').toLowerCase() === 'true';
@@ -70,13 +79,32 @@ const twitterRoutes = require("./twitter/index.js");
 app.use("/instagram", instagram);
 app.use("/twitter", twitterRoutes);
 
+// ─── Pagination Helper ────────────────────────────────────────────────────────
+function paginate(videos, page, limit) {
+  const totalVideos = videos.length;
+  const totalPages  = Math.ceil(totalVideos / limit);
+  const start       = (page - 1) * limit;
+  const end         = start + limit;
+
+  return {
+    page,
+    limit,
+    totalVideos,
+    totalPages,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1,
+    videos: videos.slice(start, end)
+  };
+}
+
+// ─── Routes ───────────────────────────────────────────────────────────────────
+
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to Rareprob Instagram Downloader API");
 });
 
 app.get('/health', (req, res) => {
   const cache = getAllCachedData();
-
   res.json({
     ok: true,
     updatedAt: cache.updatedAt,
@@ -85,83 +113,151 @@ app.get('/health', (req, res) => {
   });
 });
 
+// GET /api/categories?page=1&limit=10
 app.get('/api/categories', (req, res) => {
+  const page  = Math.max(1, parseInt(req.query.page)  || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 10);
+
+  const allCategories = getCategories();
+  const total         = allCategories.length;
+  const totalPages    = Math.ceil(total / limit);
+  const start         = (page - 1) * limit;
+
   res.json({
-    total: getCategories().length,
-    categories: getCategories()
+    page,
+    limit,
+    total,
+    totalPages,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1,
+    categories: allCategories.slice(start, start + limit)
   });
 });
 
+// GET /api/content?page=1&limit=10
 app.get('/api/content', (req, res) => {
-  res.json(getAllCachedData());
+  const page  = Math.max(1, parseInt(req.query.page)  || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 10);
+
+  const cache      = getAllCachedData();
+  const allVideos  = Object.values(cache.data).flatMap(cat => cat.videos || []);
+  const paginated  = paginate(allVideos, page, limit);
+
+  res.json({
+    updatedAt: cache.updatedAt,
+    ...paginated
+  });
 });
 
+// GET /api/content/:categoryKey?page=1&limit=10
 app.get('/api/content/:categoryKey', (req, res) => {
   const category = getCategoryData(req.params.categoryKey);
 
   if (!category) {
-    return res.status(404).json({
-      message: 'Category not found'
-    });
+    return res.status(404).json({ message: 'Category not found' });
   }
 
-  res.json(category);
+  const page  = Math.max(1, parseInt(req.query.page)  || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 10);
+
+  res.json({
+    categoryKey: category.key,
+    categoryQuery: category.query,
+    ...paginate(category.videos || [], page, limit)
+  });
 });
 
+// POST /api/refresh
 app.post('/api/refresh', async (req, res) => {
   try {
     const result = await refreshAllCategories(apiKey);
-    res.json({
-      message: 'Refresh completed',
-      ...result
-    });
+    res.json({ message: 'Refresh completed', ...result });
   } catch (error) {
-    res.status(500).json({
-      message: 'Refresh failed',
-      error: error.message
-    });
+    res.status(500).json({ message: 'Refresh failed', error: error.message });
   }
 });
 
+// GET /api/feed/:countryCode?page=1&limit=10
 app.get('/api/feed/:countryCode', (req, res) => {
-  const countryCode = req.params.countryCode.toUpperCase();
-
-  const categoryKeys = countryCategoryMap[countryCode];
+  const countryCode   = req.params.countryCode.toUpperCase();
+  const categoryKeys  = countryCategoryMap[countryCode];
 
   if (!categoryKeys) {
-    return res.status(404).json({
-      message: 'Country not supported'
-    });
+    return res.status(404).json({ message: 'Country not supported' });
   }
 
-  let videos = [];
+  const page  = Math.max(1, parseInt(req.query.page)  || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 10);
 
+  let videos = [];
   categoryKeys.forEach((key) => {
     const category = getCategoryData(key);
-
-    if (category && category.videos) {
-      videos = videos.concat(category.videos);
-    }
+    if (category?.videos) videos = videos.concat(category.videos);
   });
 
-  // shuffle videos for feed experience
+  // Shuffle for feed experience
   videos.sort(() => Math.random() - 0.5);
 
   res.json({
     country: countryCode,
-    totalVideos: videos.length,
-    videos
+    ...paginate(videos, page, limit)
   });
 });
+
+// ✅ GET /api/fitness?page=1&limit=10
+app.get('/api/fitness', (req, res) => {
+  const page  = Math.max(1, parseInt(req.query.page)  || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 10);
+
+  let videos = [];
+  fitnessCategoryKeys.forEach((key) => {
+    const category = getCategoryData(key);
+    if (category?.videos) videos = videos.concat(category.videos);
+  });
+
+  // Shuffle for a fresh feed feel
+  videos.sort(() => Math.random() - 0.5);
+
+  res.json({
+    feed: 'fitness',
+    ...paginate(videos, page, limit)
+  });
+});
+
+// ✅ GET /api/fitness/:categoryKey?page=1&limit=10  (e.g. /api/fitness/yoga_shorts)
+app.get('/api/fitness/:categoryKey', (req, res) => {
+  const { categoryKey } = req.params;
+
+  if (!fitnessCategoryKeys.includes(categoryKey)) {
+    return res.status(404).json({ message: 'Fitness category not found' });
+  }
+
+  const category = getCategoryData(categoryKey);
+
+  if (!category) {
+    return res.status(404).json({ message: 'No data cached for this fitness category yet' });
+  }
+
+  const page  = Math.max(1, parseInt(req.query.page)  || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 10);
+
+  res.json({
+    feed: 'fitness',
+    categoryKey: category.key,
+    categoryQuery: category.query,
+    ...paginate(category.videos || [], page, limit)
+  });
+});
+
 
 async function bootstrap() {
   const hasCache = loadCacheFromDisk();
 
   if (!hasCache) {
-    console.log('No cache found. First server run detected. Fetching all 20 category APIs...');
+    console.log('No cache found. First server run detected. Fetching all category APIs...');
     await refreshAllCategories(apiKey);
   } else if (refreshOnStart) {
-    console.log('Cache found. Refreshing all 20 category APIs on startup...');
+    console.log('Cache found. Refreshing all category APIs on startup...');
     try {
       await refreshAllCategories(apiKey);
     } catch (error) {

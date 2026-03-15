@@ -18,7 +18,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'ENV_PRODUCTION', variable: 'ENV_FILE')]) {
                     sh '''
                         cp $ENV_FILE .env
-                        chmod 600 .env
+                        chmod 644 .env
                     '''
                 }
             }
@@ -34,12 +34,10 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p $APP_DIR
-
                     rsync -av --delete \
                     --exclude='.git' \
                     --exclude='node_modules' \
                     ./ $APP_DIR/
-
                     cd $APP_DIR
                     npm install --omit=dev
                 '''
