@@ -1,77 +1,59 @@
 pipeline {
-  agent any
+    agent any
 
-  options {
-    timestamps()
-    disableConcurrentBuilds()
-  }
-
-  environment {
-    APP_NAME = "youtube-shorts-api"
-    APP_DIR = "/var/www/youtube-shorts-api"
-    PACKAGE_NAME = "release.tar.gz"
-  }
-
-  stages {
-    stage("Checkout (SCM)") {
-      steps {
-        checkout scm
-      }
+    environment {
+        APP_DIR = "/var/www/proxy-downloader"
     }
 
-    stage("Build Check") {
-      steps {
-        sh "npm ci"
-      }
-    }
+    stages {
 
-    stage("Package") {
-      steps {
-        sh '''
-          tar --exclude=".git" \
-              --exclude="node_modules" \
-              --exclude="cache" \
-              --exclude=".env" \
-              -czf "$PACKAGE_NAME" .
-        '''
-      }
-    }
-
-    stage("Deploy To VM") {
-      steps {
-        withCredentials([
-          file(credentialsId: "YOUTUBE_SHORTS_ENV_FILE", variable: "ENV_FILE"),
-          string(credentialsId: "VM_HOST", variable: "VM_HOST"),
-          string(credentialsId: "VM_USER", variable: "VM_USER")
-        ]) {
-          sshagent(credentials: ["VM_SSH_KEY"]) {
-            sh '''
-              scp -o StrictHostKeyChecking=no "$PACKAGE_NAME" "$VM_USER@$VM_HOST:/tmp/$PACKAGE_NAME"
-              scp -o StrictHostKeyChecking=no "$ENV_FILE" "$VM_USER@$VM_HOST:/tmp/.env"
-
-              ssh -o StrictHostKeyChecking=no "$VM_USER@$VM_HOST" '
-                set -e
-                mkdir -p "'"$APP_DIR"'"
-                tar -xzf "/tmp/'"$PACKAGE_NAME"'" -C "'"$APP_DIR"'"
-                cp /tmp/.env "'"$APP_DIR"'/.env"
-                cd "'"$APP_DIR"'"
-                npm ci --omit=dev
-                pm2 reload "'"$APP_NAME"'" || pm2 start src/server.js --name "'"$APP_NAME"'"
-                pm2 save
-              '
-            '''
-          }
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/012802HJoshi/Proxy_Instagram'
+            }
         }
-      }
-    }
-  }
 
-  post {
-    success {
-      echo "Deployment completed successfully."
+        stage('Environment Setup') {
+            steps {
+                withCredentials([file(credentialsId: 'YOUTUBE_SHORTS_ENV_FILE', variable: 'ENV_FILE')]) {
+                    sh '''
+                        cp $ENV_FILE .env
+                        chmod 644 .env
+                    '''
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    mkdir -p $APP_DIR
+                    rsync -av --delete \
+                    --exclude='.git' \
+                    --exclude='node_modules' \
+                    ./ $APP_DIR/
+                    cd $APP_DIR
+                    npm install --omit=dev
+                '''
+            }
+        }
+
+        stage('Restart Server') {
+            steps {
+                sh '''
+                    cd $APP_DIR
+
+                    pm2 reload instagram-api || pm2 start npm --name instagram-api -- run start:prod
+
+                    pm2 save
+                '''
+            }
+        }
     }
-    failure {
-      echo "Deployment failed. Check Jenkins console logs."
-    }
-  }
 }
