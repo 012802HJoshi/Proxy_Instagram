@@ -1,5 +1,0 @@
-{
-  "watch": ["server.js", "routes", "services", "config"],
-  "ignore": ["storage/*", "node_modules/*", ".git/*"],
-  "ext": "js"
-}
