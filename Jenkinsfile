@@ -15,7 +15,7 @@ pipeline {
 
         stage('Environment Setup') {
             steps {
-                withCredentials([file(credentialsId: 'YOUTUBE_SHORTS_ENV_FILE', variable: 'ENV_FILE')]) {
+                withCredentials([file(credentialsId: 'ENV_PRODUCTION', variable: 'ENV_FILE')]) {
                     sh '''
                         cp $ENV_FILE .env
                         chmod 644 .env
@@ -49,7 +49,7 @@ pipeline {
                 sh '''
                     cd $APP_DIR
 
-                    pm2 reload instagram-api || pm2 start npm --name instagram-api -- run start:prod
+                    pm2 reload instagram-api || pm2 start npm --name instagram-api -- run start
 
                     pm2 save
                 '''

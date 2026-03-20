@@ -6,7 +6,7 @@ const {
   refreshAllCategoryCaches,
 } = require("./services/youtubeTrendingService");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4141;
 const REFRESH_ON_START = (process.env.REFRESH_ON_START || "true").toLowerCase() === "true";
 
 async function startServer() {
