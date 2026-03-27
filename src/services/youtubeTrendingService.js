@@ -24,16 +24,16 @@ const SUPPORTED_COUNTRIES = Object.values(COUNTRY_BY_DEF);
 
 /** 10 categories × 10 shorts each (search query tuned for Shorts). */
 const CATEGORY_DEFS = [
-  { id: "gaming", label: "Gaming", query: "gaming shorts", videoDuration: "short", order: "viewCount" },
-  { id: "comedy", label: "Comedy", query: "comedy funny shorts", videoDuration: "short", order: "viewCount" },
-  { id: "music", label: "Music", query: "music shorts", videoDuration: "short", order: "viewCount" },
-  { id: "food", label: "Food", query: "food cooking shorts", videoDuration: "short", order: "viewCount" },
-  { id: "fitness", label: "Fitness", query: "fitness workout shorts", videoDuration: "short", order: "viewCount" },
-  { id: "tech", label: "Tech", query: "technology tech shorts", videoDuration: "short", order: "viewCount" },
-  { id: "beauty", label: "Beauty", query: "beauty makeup shorts", videoDuration: "short", order: "viewCount" },
-  { id: "travel", label: "Travel", query: "travel shorts", videoDuration: "short", order: "viewCount" },
-  { id: "education", label: "Education", query: "education learn shorts", videoDuration: "short", order: "viewCount" },
-  { id: "sports", label: "Sports", query: "sports highlights shorts", videoDuration: "short", order: "viewCount" },
+  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/gaming.svg", color: "#D9C7F7", query: "gaming shorts", videoDuration: "short", order: "viewCount" },
+  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.svg", color: "#BFE9E5", query: "comedy funny shorts", videoDuration: "short", order: "viewCount" },
+  { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.svg", color: "#FFD1CC", query: "music shorts", videoDuration: "short", order: "viewCount" },
+  { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.svg", color: "#CFE8FF", query: "food cooking shorts", videoDuration: "short", order: "viewCount" },
+  { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.svg", color: "#E3F7C8", query: "fitness workout shorts", videoDuration: "short", order: "viewCount" },
+  { id: "tech", label: "Tech", icon: "https://img.rareprob.com/img/yt-category/tech.svg", color: "#F9D0E0", query: "technology tech shorts", videoDuration: "short", order: "viewCount" },
+  { id: "beauty", label: "Beauty", icon: "https://img.rareprob.com/img/yt-category/beauty.svg", color: "#D4D9F8", query: "beauty makeup shorts", videoDuration: "short", order: "viewCount" },
+  { id: "travel", label: "Travel", icon: "https://img.rareprob.com/img/yt-category/travel.svg", color: "#D2F5E9", query: "travel shorts", videoDuration: "short", order: "viewCount" },
+  { id: "education", label: "Education", icon: "https://img.rareprob.com/img/yt-category/education.svg", color: "#FFE7B8", query: "education learn shorts", videoDuration: "short", order: "viewCount" },
+  { id: "sports", label: "Sports", icon: "https://img.rareprob.com/img/yt-category/sports.svg", color: "#F2D6FF", query: "sports highlights shorts", videoDuration: "short", order: "viewCount" },
 ];
 
 const SUPPORTED_CATEGORY_IDS = CATEGORY_DEFS.map((c) => c.id);
@@ -180,6 +180,8 @@ async function writeCategoryCache(categoryDef, videos) {
   const payload = {
     category: id,
     label: categoryDef.label,
+    icon: categoryDef.icon,
+    color: categoryDef.color,
     updatedAt: new Date().toISOString(),
     total: videos.length,
     videos,
@@ -229,7 +231,7 @@ async function refreshAllCategoryCaches() {
 }
 
 function getCategoryListMeta() {
-  return CATEGORY_DEFS.map(({ id, label }) => ({ id, label }));
+  return CATEGORY_DEFS.map(({ id, label, icon, color }) => ({ id, label, icon, color }));
 }
 
 module.exports = {
