@@ -1,18 +1,11 @@
 {
   "category": "fitness",
   "label": "Fitness",
-  "updatedAt": "2026-03-20T05:38:06.067Z",
+  "icon": "https://img.rareprob.com/img/yt-category/fitness.webp",
+  "color": "#E3F7C8",
+  "updatedAt": "2026-03-29T19:03:57.080Z",
   "total": 10,
   "videos": [
-    {
-      "videoId": "T5Jw1L0EMPw",
-      "videoUrl": "https://www.youtube.com/watch?v=T5Jw1L0EMPw",
-      "title": "Sigma #bek_zufarr #workout #motivation #sigma #workoutmotivation",
-      "channelTitle": "Зуфар Бек",
-      "description": "",
-      "publishedAt": "2024-01-28T12:03:32Z",
-      "thumbnail": "https://i.ytimg.com/vi/T5Jw1L0EMPw/hqdefault.jpg"
-    },
     {
       "videoId": "M2VJYsrUohQ",
       "videoUrl": "https://www.youtube.com/watch?v=M2VJYsrUohQ",
@@ -20,7 +13,7 @@
       "channelTitle": "Galaxy Health Club",
       "description": "",
       "publishedAt": "2022-07-24T10:46:36Z",
-      "thumbnail": "https://i.ytimg.com/vi/M2VJYsrUohQ/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/M2VJYsrUohQ/oardefault.jpg"
     },
     {
       "videoId": "s4530GX4aJc",
@@ -29,7 +22,16 @@
       "channelTitle": "imkavy",
       "description": "",
       "publishedAt": "2022-02-12T06:30:08Z",
-      "thumbnail": "https://i.ytimg.com/vi/s4530GX4aJc/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/s4530GX4aJc/oardefault.jpg"
+    },
+    {
+      "videoId": "KDo8n_7_2YI",
+      "videoUrl": "https://www.youtube.com/watch?v=KDo8n_7_2YI",
+      "title": "Brave woman fights off male attacker while alone at gym #Shorts",
+      "channelTitle": "USA TODAY",
+      "description": "A 24-year-old woman successfully fought off a male attacker while she was working out alone at her apartment's gym. The man ...",
+      "publishedAt": "2023-02-17T13:28:54Z",
+      "thumbnail": "https://i.ytimg.com/vi/KDo8n_7_2YI/oardefault.jpg"
     },
     {
       "videoId": "EtGugw_MrOs",
@@ -38,16 +40,7 @@
       "channelTitle": "Kayla Nella",
       "description": "",
       "publishedAt": "2024-03-08T03:34:27Z",
-      "thumbnail": "https://i.ytimg.com/vi/EtGugw_MrOs/hqdefault.jpg"
-    },
-    {
-      "videoId": "zuqQTPJaUOo",
-      "videoUrl": "https://www.youtube.com/watch?v=zuqQTPJaUOo",
-      "title": "He Accidently Walked Into Frame (@nataleebarnett_)",
-      "channelTitle": "FitFix ",
-      "description": "shorts #gym #fitness This is the perfect way to ask permission to film at the gym.",
-      "publishedAt": "2023-06-22T19:00:33Z",
-      "thumbnail": "https://i.ytimg.com/vi/zuqQTPJaUOo/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/EtGugw_MrOs/oardefault.jpg"
     },
     {
       "videoId": "dKhRCBpdU8w",
@@ -56,7 +49,7 @@
       "channelTitle": "Austin and TT",
       "description": "",
       "publishedAt": "2023-10-05T00:26:30Z",
-      "thumbnail": "https://i.ytimg.com/vi/dKhRCBpdU8w/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/dKhRCBpdU8w/oardefault.jpg"
     },
     {
       "videoId": "L8Oqr5Iza-E",
@@ -65,7 +58,16 @@
       "channelTitle": "growwithjo",
       "description": "Working out from home can get you amazing results if you stay consistent! Join the community that keeps you encouraged and ...",
       "publishedAt": "2022-05-02T14:30:05Z",
-      "thumbnail": "https://i.ytimg.com/vi/L8Oqr5Iza-E/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/L8Oqr5Iza-E/oardefault.jpg"
+    },
+    {
+      "videoId": "uwitWUcnC7U",
+      "videoUrl": "https://www.youtube.com/watch?v=uwitWUcnC7U",
+      "title": "NEVER LOOSE HOPE 👿🏋️| NEVER GIVE UP| MOTIVATION 🔥|#shorts #viral #motivation #status",
+      "channelTitle": "BEAST GYM",
+      "description": "NEVER LOOSE HOPE 🏋️| NEVER GIVE UP| MOTIVATION |#shorts #viral #motivation #status",
+      "publishedAt": "2022-11-24T08:07:54Z",
+      "thumbnail": "https://i.ytimg.com/vi/uwitWUcnC7U/oardefault.jpg"
     },
     {
       "videoId": "H2H68PiMK_w",
@@ -74,7 +76,7 @@
       "channelTitle": "Dhanush Amin",
       "description": "",
       "publishedAt": "2023-06-05T03:45:02Z",
-      "thumbnail": "https://i.ytimg.com/vi/H2H68PiMK_w/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/H2H68PiMK_w/oardefault.jpg"
     },
     {
       "videoId": "5AW-lgNweWQ",
@@ -83,16 +85,16 @@
       "channelTitle": "Leopold Franke",
       "description": "",
       "publishedAt": "2024-07-07T18:14:31Z",
-      "thumbnail": "https://i.ytimg.com/vi/5AW-lgNweWQ/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/5AW-lgNweWQ/oardefault.jpg"
     },
     {
-      "videoId": "zDZ07OxaZJE",
-      "videoUrl": "https://www.youtube.com/watch?v=zDZ07OxaZJE",
-      "title": "खतरनाक⚠️और CRAZY😱Bodybuilders💪?/OMG🤯#shorts#youtubeshorts#viral#funny#fitness#gym#india#new#reels#yt",
-      "channelTitle": "Shadow 2C",
-      "description": "खतरनाक⚠️और CRAZY  Bodybuilders  ?/OMG  #shorts#youtubeshorts#viral#funny#fitness#gym#india#new#reels#yt ...",
-      "publishedAt": "2023-06-04T13:57:05Z",
-      "thumbnail": "https://i.ytimg.com/vi/zDZ07OxaZJE/hqdefault.jpg"
+      "videoId": "kqemoar6Tbk",
+      "videoUrl": "https://www.youtube.com/watch?v=kqemoar6Tbk",
+      "title": "Morning Zumba Session :-5am-6am - Group A - ( Dance Hall 1 )#zumbadance #rudradevi_kala_kendra",
+      "channelTitle": "RudraDevi Kala Kendra",
+      "description": "",
+      "publishedAt": "2023-03-13T04:05:12Z",
+      "thumbnail": "https://i.ytimg.com/vi/kqemoar6Tbk/oardefault.jpg"
     }
   ]
 }

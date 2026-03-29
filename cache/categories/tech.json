@@ -1,7 +1,9 @@
 {
   "category": "tech",
   "label": "Tech",
-  "updatedAt": "2026-03-20T05:38:40.711Z",
+  "icon": "https://img.rareprob.com/img/yt-category/tech.webp",
+  "color": "#F9D0E0",
+  "updatedAt": "2026-03-29T19:04:09.268Z",
   "total": 10,
   "videos": [
     {
@@ -11,7 +13,7 @@
       "channelTitle": "VFX HD",
       "description": "",
       "publishedAt": "2022-05-27T07:07:04Z",
-      "thumbnail": "https://i.ytimg.com/vi/h0xOdfMJTJI/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/h0xOdfMJTJI/oardefault.jpg"
     },
     {
       "videoId": "KCeEjhDMIv4",
@@ -20,7 +22,7 @@
       "channelTitle": "Tech Cave",
       "description": "Instagram - https://www.instagram.com/techcave_ Copyright Disclaimer- Copyright Disclaimer under section 107 of the Copyright ...",
       "publishedAt": "2023-07-15T07:18:44Z",
-      "thumbnail": "https://i.ytimg.com/vi/KCeEjhDMIv4/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/KCeEjhDMIv4/oardefault.jpg"
     },
     {
       "videoId": "IPhARlUO6NA",
@@ -29,7 +31,7 @@
       "channelTitle": "VMK Technical Power",
       "description": "New Science Project #shorts #science #technology #trending.",
       "publishedAt": "2023-04-28T01:30:04Z",
-      "thumbnail": "https://i.ytimg.com/vi/IPhARlUO6NA/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/IPhARlUO6NA/oardefault.jpg"
     },
     {
       "videoId": "rbyud9N4zPM",
@@ -38,7 +40,7 @@
       "channelTitle": "Ashley Dudarenok",
       "description": "",
       "publishedAt": "2024-01-26T05:45:01Z",
-      "thumbnail": "https://i.ytimg.com/vi/rbyud9N4zPM/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/rbyud9N4zPM/oardefault.jpg"
     },
     {
       "videoId": "OcuYIlrG7ao",
@@ -47,7 +49,7 @@
       "channelTitle": "Tech Master Shorts",
       "description": "Samsung Vs iPhone कौनसा होता है fast charge samsung | iphone | charging | dailyvideos | charging competition ...",
       "publishedAt": "2024-01-29T14:05:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/OcuYIlrG7ao/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/OcuYIlrG7ao/oardefault.jpg"
     },
     {
       "videoId": "DYgXEjzGiTo",
@@ -56,7 +58,7 @@
       "channelTitle": "Cake Make Tips ",
       "description": "",
       "publishedAt": "2024-06-14T14:38:59Z",
-      "thumbnail": "https://i.ytimg.com/vi/DYgXEjzGiTo/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/DYgXEjzGiTo/oardefault.jpg"
     },
     {
       "videoId": "8G0dFyWouDA",
@@ -65,16 +67,25 @@
       "channelTitle": "The WTF Shorts",
       "description": "MIND-BLOWING FACT: You're using the viral momo maker WRONG! This amazing fact shows the one simple trick that makes ...",
       "publishedAt": "2025-07-27T01:30:04Z",
-      "thumbnail": "https://i.ytimg.com/vi/8G0dFyWouDA/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/8G0dFyWouDA/oardefault.jpg"
+    },
+    {
+      "videoId": "QOWZFH4zJAE",
+      "videoUrl": "https://www.youtube.com/watch?v=QOWZFH4zJAE",
+      "title": "Best appliances and gadgets for smart home |new inventions and ideas for smart home #gadgets #shorts",
+      "channelTitle": "Smart home gadgets 2.0",
+      "description": "",
+      "publishedAt": "2024-10-09T07:37:54Z",
+      "thumbnail": "https://i.ytimg.com/vi/QOWZFH4zJAE/oardefault.jpg"
     },
     {
       "videoId": "-tEZPs7jflw",
       "videoUrl": "https://www.youtube.com/watch?v=-tEZPs7jflw",
       "title": "Samsung Galaxy S24 Ultra VS Iphone 15 Pro Max-Zoom Test",
-      "channelTitle": "Tech Master",
+      "channelTitle": "Next Univerz",
       "description": "S24 ultra vs iphone 15 pro max zoom test #techmaster #shorts #s24ultra #iphone Personally connect rahne k liye in social media ...",
       "publishedAt": "2024-02-16T14:25:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/-tEZPs7jflw/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/-tEZPs7jflw/oardefault.jpg"
     },
     {
       "videoId": "1Nef8LPO-jo",
@@ -83,16 +94,7 @@
       "channelTitle": "Mrwhosetheboss",
       "description": "shorts #technology I spend a LOT of time trying to make my videos as concise, polished and useful as possible for you - if you ...",
       "publishedAt": "2022-11-01T11:00:06Z",
-      "thumbnail": "https://i.ytimg.com/vi/1Nef8LPO-jo/hqdefault.jpg"
-    },
-    {
-      "videoId": "UYlEEEZ_v7E",
-      "videoUrl": "https://www.youtube.com/watch?v=UYlEEEZ_v7E",
-      "title": "iPhone vs Android - which one survives BOILING!?",
-      "channelTitle": "Mrwhosetheboss Plus",
-      "description": "Do consider subscribing to my Shorts Channel! Main Mrwhosetheboss YouTube Channel: ...",
-      "publishedAt": "2021-12-19T11:33:34Z",
-      "thumbnail": "https://i.ytimg.com/vi/UYlEEEZ_v7E/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/1Nef8LPO-jo/oardefault.jpg"
     }
   ]
 }

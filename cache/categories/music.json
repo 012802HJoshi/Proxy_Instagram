@@ -1,7 +1,9 @@
 {
   "category": "music",
   "label": "Music",
-  "updatedAt": "2026-03-20T05:36:40.269Z",
+  "icon": "https://img.rareprob.com/img/yt-category/music.webp",
+  "color": "#FFD1CC",
+  "updatedAt": "2026-03-29T19:32:53.408Z",
   "total": 10,
   "videos": [
     {
@@ -11,7 +13,18 @@
       "channelTitle": "Cocomelon - Nursery Rhymes",
       "description": "It's time to get all clean! Let's have fun playing in the bubbles and washing all over!",
       "publishedAt": "2018-05-02T07:00:01Z",
-      "thumbnail": "https://i.ytimg.com/vi/WRVsOCh907o/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/WRVsOCh907o/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/WRVsOCh907o/oardefault.jpg"
+    },
+    {
+      "videoId": "MR5XSOdjKMA",
+      "videoUrl": "https://www.youtube.com/watch?v=MR5XSOdjKMA",
+      "title": "Baa Baa Black Sheep | @CoComelon Nursery Rhymes &amp; Kids Songs",
+      "channelTitle": "Cocomelon - Nursery Rhymes",
+      "description": "It's bath time for the sheep! But we'll have to catch him first! Sing along with this familiar nursery rhyme!",
+      "publishedAt": "2018-06-25T07:00:03Z",
+      "thumbnail": "https://i.ytimg.com/vi/MR5XSOdjKMA/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/MR5XSOdjKMA/oardefault.jpg"
     },
     {
       "videoId": "020g-0hhCAU",
@@ -20,16 +33,38 @@
       "channelTitle": "Cocomelon - Nursery Rhymes",
       "description": "Subscribe for new videos every week: https://www.youtube.com/c/Cocomelon?sub_confirmation=1 Lyrics: Baby Shark, do do do ...",
       "publishedAt": "2017-11-21T08:00:01Z",
-      "thumbnail": "https://i.ytimg.com/vi/020g-0hhCAU/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/020g-0hhCAU/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/020g-0hhCAU/oardefault.jpg"
     },
     {
-      "videoId": "Oq61TxejZ5g",
-      "videoUrl": "https://www.youtube.com/watch?v=Oq61TxejZ5g",
-      "title": "First Day of School | CoComelon Nursery Rhymes &amp; Kids Songs",
+      "videoId": "YzXi5HpgYGc",
+      "videoUrl": "https://www.youtube.com/watch?v=YzXi5HpgYGc",
+      "title": "Johny Johny Yes Papa (Parents Version) | @CoComelon Nursery Rhymes &amp; Kids Songs",
       "channelTitle": "Cocomelon - Nursery Rhymes",
-      "description": "Today is the first day of preschool! J.J. is excited, but a little nervous too! There are so many new things to see and learn today!",
-      "publishedAt": "2019-01-29T08:00:05Z",
-      "thumbnail": "https://i.ytimg.com/vi/Oq61TxejZ5g/hqdefault.jpg"
+      "description": "Mom and Dad have snuck into the kitchen for a midnight snack, but they're not eating very healthy food. What should they eat ...",
+      "publishedAt": "2017-12-26T08:00:03Z",
+      "thumbnail": "https://i.ytimg.com/vi/YzXi5HpgYGc/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/YzXi5HpgYGc/oardefault.jpg"
+    },
+    {
+      "videoId": "ygcN65SlLFg",
+      "videoUrl": "https://www.youtube.com/watch?v=ygcN65SlLFg",
+      "title": "Hickory Dickory Dock | CoComelon Nursery Rhymes &amp; Kids Songs",
+      "channelTitle": "Cocomelon - Nursery Rhymes",
+      "description": "Oh no! The cheese is stuck at the top of the clock, and our friend the mouse can't get it down! Sing along with this classic counting ...",
+      "publishedAt": "2017-11-10T08:00:03Z",
+      "thumbnail": "https://i.ytimg.com/vi/ygcN65SlLFg/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/ygcN65SlLFg/oardefault.jpg"
+    },
+    {
+      "videoId": "QA48wTGbU7A",
+      "videoUrl": "https://www.youtube.com/watch?v=QA48wTGbU7A",
+      "title": "Head Shoulders Knees &amp; Toes | @CoComelon Nursery Rhymes &amp; Kids Songs",
+      "channelTitle": "Cocomelon - Nursery Rhymes",
+      "description": "Dance along with this classic nursery rhyme, and have fun learning about all the different body parts! Subscribe for new videos ...",
+      "publishedAt": "2017-10-03T18:17:08Z",
+      "thumbnail": "https://i.ytimg.com/vi/QA48wTGbU7A/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/QA48wTGbU7A/oardefault.jpg"
     },
     {
       "videoId": "9YzG5nVc6sg",
@@ -38,7 +73,18 @@
       "channelTitle": "Cocomelon - Nursery Rhymes",
       "description": "Come on, lets play, play, play! Join JJ and the CoComelon families in a game of soccer! This fun kids song is all about sports and ...",
       "publishedAt": "2021-07-29T07:02:08Z",
-      "thumbnail": "https://i.ytimg.com/vi/9YzG5nVc6sg/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/9YzG5nVc6sg/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/9YzG5nVc6sg/oardefault.jpg"
+    },
+    {
+      "videoId": "jbBbRjs_niM",
+      "videoUrl": "https://www.youtube.com/watch?v=jbBbRjs_niM",
+      "title": "Looby Loo | CoComelon Nursery Rhymes &amp; Kids Songs",
+      "channelTitle": "Cocomelon - Nursery Rhymes",
+      "description": "Everybody get up and dance! It's time to move and groove with all your Cocomelon friends! Subscribe for new videos every week: ...",
+      "publishedAt": "2018-12-18T08:00:08Z",
+      "thumbnail": "https://i.ytimg.com/vi/jbBbRjs_niM/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/jbBbRjs_niM/oardefault.jpg"
     },
     {
       "videoId": "AIIj0mBX1jU",
@@ -47,7 +93,8 @@
       "channelTitle": "ChuChu TV Nursery Rhymes & Kids Songs",
       "description": "Help us hit 100M! Subscribe now - https://www.youtube.com/ChuChuTV?sub_confirmation=1 Get the cute Baby Taku's Toy Bestie ...",
       "publishedAt": "2014-07-26T00:36:01Z",
-      "thumbnail": "https://i.ytimg.com/vi/AIIj0mBX1jU/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/AIIj0mBX1jU/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/AIIj0mBX1jU/oardefault.jpg"
     },
     {
       "videoId": "hqzvHfy-Ij0",
@@ -56,43 +103,8 @@
       "channelTitle": "Cocomelon - Nursery Rhymes",
       "description": "Can JJ and friends help Twinkle? Cody and Nina Join JJ for a playdate at his new treehouse on CoComelon lane for a magical ...",
       "publishedAt": "2022-06-14T07:00:10Z",
-      "thumbnail": "https://i.ytimg.com/vi/hqzvHfy-Ij0/hqdefault.jpg"
-    },
-    {
-      "videoId": "qbJg-sIP3L4",
-      "videoUrl": "https://www.youtube.com/watch?v=qbJg-sIP3L4",
-      "title": "How cute is she🥺🥺🥺 #cupsong #thevoicekids #shorts",
-      "channelTitle": "The Voice Kids",
-      "description": "Full episodes: https://url.joyn.de/tvk/description The Voice Kids: #Shorts #thevoicekids #thevoicekidsgermany #cute #cupsong ...",
-      "publishedAt": "2022-02-21T13:00:23Z",
-      "thumbnail": "https://i.ytimg.com/vi/qbJg-sIP3L4/hqdefault.jpg"
-    },
-    {
-      "videoId": "Opmh3qXZmOs",
-      "videoUrl": "https://www.youtube.com/watch?v=Opmh3qXZmOs",
-      "title": "Let us know what we should write this song about! #walkofftheearth #newsong #shorts",
-      "channelTitle": "Walk off the Earth",
-      "description": "Pre-Save our new single 'whatever' here: orcd.co/wote.",
-      "publishedAt": "2023-04-13T13:27:06Z",
-      "thumbnail": "https://i.ytimg.com/vi/Opmh3qXZmOs/hqdefault.jpg"
-    },
-    {
-      "videoId": "TMg0hDCm31k",
-      "videoUrl": "https://www.youtube.com/watch?v=TMg0hDCm31k",
-      "title": "Adorable Elephant Learns to Play the Drums!  #Elephants #Shorts",
-      "channelTitle": "The Pet Collective",
-      "description": "Fun Animal Fact: Elephants invented the drum solo! (Via Jonathan R.) #Elephants #Drummers #Funny #Music #Shorts ...",
-      "publishedAt": "2022-11-04T17:48:38Z",
-      "thumbnail": "https://i.ytimg.com/vi/TMg0hDCm31k/hqdefault.jpg"
-    },
-    {
-      "videoId": "XVCVeugrLZc",
-      "videoUrl": "https://www.youtube.com/watch?v=XVCVeugrLZc",
-      "title": "How to make a Pianist Angry 😡 🎹 #shorts #piano",
-      "channelTitle": "The Ruby Piano",
-      "description": "",
-      "publishedAt": "2021-10-25T23:20:21Z",
-      "thumbnail": "https://i.ytimg.com/vi/XVCVeugrLZc/hqdefault.jpg"
+      "thumbnail": "https://i.ytimg.com/vi/hqzvHfy-Ij0/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/hqzvHfy-Ij0/oardefault.jpg"
     }
   ]
 }

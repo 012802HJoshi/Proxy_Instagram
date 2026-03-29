@@ -4,6 +4,7 @@ const app = require("./app");
 const {
   refreshAllTrendingCaches,
   refreshAllCategoryCaches,
+  refreshAllFitnessCaches,
 } = require("./services/youtubeTrendingService");
 
 const PORT = process.env.PORT || 4141;
@@ -17,6 +18,9 @@ async function startServer() {
     const categoryResults = await refreshAllCategoryCaches();
     // eslint-disable-next-line no-console
     console.log("Category refresh results (10 × 10 shorts):", categoryResults);
+    const fitnessResults = await refreshAllFitnessCaches();
+    // eslint-disable-next-line no-console
+    console.log("Fitness subcategory refresh results (7 × 10 shorts):", fitnessResults);
   }
 
   app.listen(PORT, () => {

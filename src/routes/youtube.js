@@ -2,11 +2,16 @@ const express = require("express");
 const {
   SUPPORTED_COUNTRIES,
   SUPPORTED_CATEGORY_IDS,
+  SUPPORTED_FITNESS_SUBCATEGORY_IDS,
   getCategoryListMeta,
+  getFitnessSubcategoryListMeta,
   refreshCountryCache,
   readCountryCache,
   refreshCategoryCache,
   readCategoryCache,
+  refreshFitnessSubcategoryCache,
+  readFitnessSubcategoryCache,
+  refreshAllFitnessCaches,
 } = require("../services/youtubeTrendingService");
 
 const router = express.Router();
@@ -22,9 +27,14 @@ router.get("/", (req, res) => {
       "GET /youtube/categories",
       "GET /youtube/categories/:categoryId",
       "POST /youtube/categories/:categoryId/refresh",
+      "GET /youtube/fitness",
+      "POST /youtube/fitness/refresh",
+      "GET /youtube/fitness/:subcategoryId",
+      "POST /youtube/fitness/:subcategoryId/refresh",
     ],
     supportedCountries: SUPPORTED_COUNTRIES,
     categories: getCategoryListMeta(),
+    fitnessSubcategories: getFitnessSubcategoryListMeta(),
   });
 });
 
@@ -137,6 +147,75 @@ router.post("/categories/:categoryId/refresh", async (req, res) => {
 
   try {
     const result = await refreshCategoryCache(categoryId);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+/** Fitness hub: 7 subcategories × 10 shorts each (cache/fitness/<id>.json) */
+
+router.get("/fitness", async (req, res) => {
+  try {
+    const data = await Promise.all(
+      SUPPORTED_FITNESS_SUBCATEGORY_IDS.map(async (subcategoryId) => {
+        try {
+          const cache = await readFitnessSubcategoryCache(subcategoryId);
+          return { subcategoryId, ...cache };
+        } catch (error) {
+          return { subcategoryId, error: "Cache not found. Refresh this subcategory first." };
+        }
+      })
+    );
+
+    return res.json({
+      subcategories: getFitnessSubcategoryListMeta(),
+      data,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+router.post("/fitness/refresh", async (req, res) => {
+  try {
+    const results = await refreshAllFitnessCaches();
+    return res.json({ results });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/fitness/:subcategoryId", async (req, res) => {
+  const subcategoryId = (req.params.subcategoryId || "").toLowerCase();
+  if (!SUPPORTED_FITNESS_SUBCATEGORY_IDS.includes(subcategoryId)) {
+    return res.status(400).json({
+      message: "Unsupported fitness subcategory",
+      supportedSubcategories: SUPPORTED_FITNESS_SUBCATEGORY_IDS,
+    });
+  }
+
+  try {
+    const cache = await readFitnessSubcategoryCache(subcategoryId);
+    return res.json(cache);
+  } catch (error) {
+    return res.status(404).json({
+      message: `Cache not found for ${subcategoryId}. Use POST /youtube/fitness/${subcategoryId}/refresh`,
+    });
+  }
+});
+
+router.post("/fitness/:subcategoryId/refresh", async (req, res) => {
+  const subcategoryId = (req.params.subcategoryId || "").toLowerCase();
+  if (!SUPPORTED_FITNESS_SUBCATEGORY_IDS.includes(subcategoryId)) {
+    return res.status(400).json({
+      message: "Unsupported fitness subcategory",
+      supportedSubcategories: SUPPORTED_FITNESS_SUBCATEGORY_IDS,
+    });
+  }
+
+  try {
+    const result = await refreshFitnessSubcategoryCache(subcategoryId);
     return res.json(result);
   } catch (error) {
     return res.status(500).json({ message: error.message });
