@@ -4,11 +4,11 @@ const path = require("path");
 const YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 
 const TRENDING_DEFS = [
-  { key: "trending_GLOBAL", query: "trending shorts", videoDuration: "short", order: "viewCount" },
-  { key: "trending_IN", query: "trending shorts", region: "IN", videoDuration: "short", order: "viewCount" },
-  { key: "trending_KR", query: "trending shorts", region: "KR", videoDuration: "short", order: "viewCount" },
-  { key: "trending_BR", query: "trending shorts", region: "BR", videoDuration: "short", order: "viewCount" },
-  { key: "trending_AE", query: "trending shorts", region: "AE", videoDuration: "short", order: "viewCount" },
+  { key: "trending_GLOBAL", query: "#shorts", videoDuration: "short", order: "viewCount" },
+  { key: "trending_IN", query: "#shorts", region: "IN", relevanceLanguage: "hi", videoDuration: "short", order: "relevance" },
+  { key: "trending_KR", query: "#shorts", region: "KR", relevanceLanguage: "ko", videoDuration: "short", order: "relevance" },
+  { key: "trending_BR", query: "#shorts", region: "BR", relevanceLanguage: "pt", videoDuration: "short", order: "relevance" },
+  { key: "trending_AE", query: "#shorts", region: "AE", relevanceLanguage: "ar", videoDuration: "short", order: "relevance" },
 ];
 
 const CACHE_DIR = path.join(process.cwd(), "cache");
@@ -131,6 +131,10 @@ function toSearchParams(def, apiKey) {
 
   if (def.region) {
     params.set("regionCode", def.region);
+  }
+
+  if (def.relevanceLanguage) {
+    params.set("relevanceLanguage", def.relevanceLanguage);
   }
 
   return params;
