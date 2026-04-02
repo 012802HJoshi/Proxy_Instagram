@@ -4,11 +4,11 @@ const path = require("path");
 const YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 
 const TRENDING_DEFS = [
-  { key: "trending_GLOBAL", query: "#shorts", videoDuration: "short", order: "viewCount" },
+  { key: "trending_GLOBAL", query: "#shorts", region: "US", relevanceLanguage: "en", videoDuration: "short", order: "relevance"},
   { key: "trending_IN", query: "#shorts", region: "IN", relevanceLanguage: "hi", videoDuration: "short", order: "relevance" },
-  { key: "trending_KR", query: "#shorts", region: "KR", relevanceLanguage: "ko", videoDuration: "short", order: "relevance" },
-  { key: "trending_BR", query: "#shorts", region: "BR", relevanceLanguage: "pt", videoDuration: "short", order: "relevance" },
-  { key: "trending_AE", query: "#shorts", region: "AE", relevanceLanguage: "ar", videoDuration: "short", order: "relevance" },
+  { key: "trending_KR", query: "한국 일상 재미있는 쇼츠 #shorts", region: "KR", relevanceLanguage: "ko", videoDuration: "short", order: "relevance" },
+  { key: "trending_BR", query: "brasil engraçado vida cotidiana #shorts", region: "BR", relevanceLanguage: "pt", videoDuration: "short", order: "relevance" },
+  { key: "trending_AE", query: "شورت dubai uae viral trending #shorts", region: "AE", relevanceLanguage: "ar", videoDuration: "short", order: "relevance" },
 ];
 
 const CACHE_DIR = path.join(process.cwd(), "cache");
