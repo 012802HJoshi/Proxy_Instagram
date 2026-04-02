@@ -26,7 +26,7 @@ const SUPPORTED_COUNTRIES = Object.values(COUNTRY_BY_DEF);
 const CATEGORY_DEFS = [
   { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/gaming.webp", color: "#D9C7F7", query: "gaming gameplay esports clips #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
   { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "comedy skits funny viral memes #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.webp", color: "#FFD1CC", query: "music cover remix viral song dance #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
+  { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.webp", color: "#FFD1CC",query: "new song 2025 official audio singer artist music video #shorts", videoDuration: "short", order: "relevance" },
   { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.webp", color: "#CFE8FF", query: "food recipe cooking street food ASMR #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
   { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.webp", color: "#E3F7C8", query: "workout fitness gym exercise home training #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
   { id: "tech", label: "Tech", icon: "https://img.rareprob.com/img/yt-category/tech.webp", color: "#F9D0E0", query: "tech gadgets smartphone AI review tips #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
