@@ -14,10 +14,10 @@ const TRENDING_DEFS = [
 const CACHE_DIR = path.join(process.cwd(), "cache");
 const COUNTRY_BY_DEF = {
   trending_GLOBAL: "GLOBAL",
-  trending_IN: "IN",
-  trending_KR: "KR",
-  trending_BR: "BR",
-  trending_AE: "AE",
+  trending_IN: "INDIA",
+  trending_KR: "KOREA",
+  trending_BR: "BRAZIL",
+  trending_AE: "ARAB",
 };
 
 const SUPPORTED_COUNTRIES = Object.values(COUNTRY_BY_DEF);
