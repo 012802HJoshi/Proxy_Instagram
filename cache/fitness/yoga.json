@@ -3,7 +3,7 @@
   "label": "Yoga",
   "icon": "https://img.rareprob.com/img/yt-category/fitness.webp",
   "color": "#E3F7C8",
-  "updatedAt": "2026-03-29T19:57:04.931Z",
+  "updatedAt": "2026-04-15T18:43:49.699Z",
   "total": 10,
   "videos": [
     {
@@ -37,6 +37,16 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/vC8cWFbg8EY/oardefault.jpg"
     },
     {
+      "videoId": "QNi8MRpShsY",
+      "videoUrl": "https://www.youtube.com/watch?v=QNi8MRpShsY",
+      "title": "CLOCK YOGA CHALLENGE BY INDIAN GIRL🔥😲||#yoga #shorts #flexibility #trending",
+      "channelTitle": "IndiYogi",
+      "description": "",
+      "publishedAt": "2023-08-02T17:46:45Z",
+      "thumbnail": "https://i.ytimg.com/vi/QNi8MRpShsY/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/QNi8MRpShsY/oardefault.jpg"
+    },
+    {
       "videoId": "xr7JFi9ggrg",
       "videoUrl": "https://www.youtube.com/watch?v=xr7JFi9ggrg",
       "title": "Flexibility Easy Stretch Yoga Flow #shorts",
@@ -55,6 +65,16 @@
       "publishedAt": "2021-06-08T18:04:05Z",
       "thumbnail": "https://i.ytimg.com/vi/5xjHpAggXsM/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/5xjHpAggXsM/oardefault.jpg"
+    },
+    {
+      "videoId": "8wYQsUbpMtc",
+      "videoUrl": "https://www.youtube.com/watch?v=8wYQsUbpMtc",
+      "title": "Why I’m NOT The World’s Most Flexible Girl 😭 #shorts",
+      "channelTitle": "Anna McNulty",
+      "description": "",
+      "publishedAt": "2023-11-15T14:00:10Z",
+      "thumbnail": "https://i.ytimg.com/vi/8wYQsUbpMtc/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/8wYQsUbpMtc/oardefault.jpg"
     },
     {
       "videoId": "B0R0hdsWOt8",
@@ -85,26 +105,6 @@
       "publishedAt": "2023-03-18T14:17:58Z",
       "thumbnail": "https://i.ytimg.com/vi/CC-CyXux0gE/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/CC-CyXux0gE/oardefault.jpg"
-    },
-    {
-      "videoId": "Tm0FmR6czis",
-      "videoUrl": "https://www.youtube.com/watch?v=Tm0FmR6czis",
-      "title": "Beginner Yoga vs Intermediate Calisthenics #shorts",
-      "channelTitle": "Fit Adess",
-      "description": "",
-      "publishedAt": "2025-02-01T06:58:52Z",
-      "thumbnail": "https://i.ytimg.com/vi/Tm0FmR6czis/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/Tm0FmR6czis/oardefault.jpg"
-    },
-    {
-      "videoId": "q6nIq25ROFo",
-      "videoUrl": "https://www.youtube.com/watch?v=q6nIq25ROFo",
-      "title": "Flexibility Easy Stretch Yoga Flow #shorts",
-      "channelTitle": "Yoga Trendy",
-      "description": "Yoga | yoga challenge | morning yoga | yoga dehnen | bedtime yoga | yoga challenges | Yoga Beweglichkeit | power yoga | yoga ...",
-      "publishedAt": "2024-03-20T15:45:02Z",
-      "thumbnail": "https://i.ytimg.com/vi/q6nIq25ROFo/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/q6nIq25ROFo/oardefault.jpg"
     }
   ]
 }

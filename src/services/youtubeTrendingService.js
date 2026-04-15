@@ -24,16 +24,16 @@ const SUPPORTED_COUNTRIES = Object.values(COUNTRY_BY_DEF);
 
 /** 10 categories × 10 shorts each. Queries bias toward YouTube Shorts (#shorts + topical terms). videoDuration=short is API filter for videos under 4 min (closest to Shorts; no shorts-only flag in Search). */
 const CATEGORY_DEFS = [
-  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/games.webp", color: "#D9C7F7", query: "gaming gameplay esports clips #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "comedy skits funny viral memes #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
+  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/games.webp", color: "#D9C7F7", query: "gaming gameplay esports clips #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "comedy skits funny viral memes #shorts youtube shorts", videoDuration: "short", order: "relevance" },
   { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.webp", color: "#FFD1CC",query: "new song 2025 official audio singer artist music video #shorts", videoDuration: "short", order: "relevance" },
-  { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.webp", color: "#CFE8FF", query: "food recipe cooking street food ASMR #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.webp", color: "#E3F7C8", query: "workout fitness gym exercise home training #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "tech", label: "Tech", icon: "https://img.rareprob.com/img/yt-category/tech.webp", color: "#F9D0E0", query: "tech gadgets smartphone AI review tips #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "beauty", label: "Beauty", icon: "https://img.rareprob.com/img/yt-category/makeup.webp", color: "#D4D9F8", query: "makeup beauty skincare GRWM tutorial #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "travel", label: "Travel", icon: "https://img.rareprob.com/img/yt-category/travel.webp", color: "#D2F5E9", query: "travel vlog places adventure POV trip #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "education", label: "Education", icon: "https://img.rareprob.com/img/yt-category/education.webp", color: "#FFE7B8", query: "learn facts explain how to tutorial science #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
-  { id: "sports", label: "Sports", icon: "https://img.rareprob.com/img/yt-category/sports.webp", color: "#F2D6FF", query: "sports highlights football basketball moments goals #shorts youtube shorts", videoDuration: "short", order: "viewCount" },
+  { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.webp", color: "#CFE8FF", query: "food recipe cooking street food ASMR #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.webp", color: "#E3F7C8", query: "workout fitness gym exercise home training #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "tech", label: "Tech", icon: "https://img.rareprob.com/img/yt-category/tech.webp", color: "#F9D0E0", query: "tech gadgets smartphone AI review tips #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "beauty", label: "Beauty", icon: "https://img.rareprob.com/img/yt-category/makeup.webp", color: "#D4D9F8", query: "makeup beauty skincare GRWM tutorial #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "travel", label: "Travel", icon: "https://img.rareprob.com/img/yt-category/travel.webp", color: "#D2F5E9", query: "travel vlog places adventure POV trip #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "education", label: "Education", icon: "https://img.rareprob.com/img/yt-category/education.webp", color: "#FFE7B8", query: "learn facts explain how to tutorial science #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "sports", label: "Sports", icon: "https://img.rareprob.com/img/yt-category/sports.webp", color: "#F2D6FF", query: "sports highlights football basketball moments goals #shorts youtube shorts", videoDuration: "short", order: "relevance" },
 ];
 
 const SUPPORTED_CATEGORY_IDS = CATEGORY_DEFS.map((c) => c.id);

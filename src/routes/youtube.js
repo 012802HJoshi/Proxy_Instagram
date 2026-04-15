@@ -5,8 +5,10 @@ const {
   SUPPORTED_FITNESS_SUBCATEGORY_IDS,
   getCategoryListMeta,
   getFitnessSubcategoryListMeta,
+  refreshAllTrendingCaches,
   refreshCountryCache,
   readCountryCache,
+  refreshAllCategoryCaches,
   refreshCategoryCache,
   readCategoryCache,
   refreshFitnessSubcategoryCache,
@@ -27,6 +29,7 @@ router.get("/", (req, res) => {
       "GET /youtube/categories",
       "GET /youtube/categories/:categoryId",
       "POST /youtube/categories/:categoryId/refresh",
+      "POST /youtube/refresh",
       "GET /youtube/fitness",
       "POST /youtube/fitness/refresh",
       "GET /youtube/fitness/:subcategoryId",
@@ -148,6 +151,38 @@ router.post("/categories/:categoryId/refresh", async (req, res) => {
   try {
     const result = await refreshCategoryCache(categoryId);
     return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+router.post("/refresh", async (req, res) => {
+  try {
+    const [trending, categories, fitness] = await Promise.all([
+      refreshAllTrendingCaches(),
+      refreshAllCategoryCaches(),
+      refreshAllFitnessCaches(),
+    ]);
+
+    const summarize = (items) => ({
+      total: items.length,
+      ok: items.filter((item) => item.ok).length,
+      failed: items.filter((item) => !item.ok).length,
+    });
+
+    return res.json({
+      message: "Triggered full cache refresh.",
+      summary: {
+        trending: summarize(trending),
+        categories: summarize(categories),
+        fitness: summarize(fitness),
+      },
+      results: {
+        trending,
+        categories,
+        fitness,
+      },
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

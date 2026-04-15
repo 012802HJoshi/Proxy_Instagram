@@ -3,7 +3,7 @@
   "label": "Body weight",
   "icon": "https://img.rareprob.com/img/yt-category/fitness.webp",
   "color": "#E3F7C8",
-  "updatedAt": "2026-03-29T19:59:23.720Z",
+  "updatedAt": "2026-04-15T18:43:51.689Z",
   "total": 10,
   "videos": [
     {
@@ -15,26 +15,6 @@
       "publishedAt": "2022-07-15T14:07:23Z",
       "thumbnail": "https://i.ytimg.com/vi/pOgz2JkvYV8/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/pOgz2JkvYV8/oardefault.jpg"
-    },
-    {
-      "videoId": "voMUltS5uME",
-      "videoUrl": "https://www.youtube.com/watch?v=voMUltS5uME",
-      "title": "Do You Even Workout ?",
-      "channelTitle": "tomigains",
-      "description": "shorts #fitness #gym This guy is trying to workout so he can gain muscle fast.",
-      "publishedAt": "2023-08-30T20:30:06Z",
-      "thumbnail": "https://i.ytimg.com/vi/voMUltS5uME/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/voMUltS5uME/oardefault.jpg"
-    },
-    {
-      "videoId": "XSi02ijVDvo",
-      "videoUrl": "https://www.youtube.com/watch?v=XSi02ijVDvo",
-      "title": "Pull ups tutorial",
-      "channelTitle": "ahmad_workout",
-      "description": "",
-      "publishedAt": "2023-07-18T16:57:36Z",
-      "thumbnail": "https://i.ytimg.com/vi/XSi02ijVDvo/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/XSi02ijVDvo/oardefault.jpg"
     },
     {
       "videoId": "TkCoHrR6Y7Q",
@@ -105,6 +85,26 @@
       "publishedAt": "2021-08-22T20:31:54Z",
       "thumbnail": "https://i.ytimg.com/vi/Cii54H_Xv1M/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/Cii54H_Xv1M/oardefault.jpg"
+    },
+    {
+      "videoId": "x4kioQFXkOg",
+      "videoUrl": "https://www.youtube.com/watch?v=x4kioQFXkOg",
+      "title": "THE PERFECT PUSH UPS TO GET A BIG CHEST #shorts #pushupseveryday",
+      "channelTitle": "THE PODCAST WITH SOUL",
+      "description": "",
+      "publishedAt": "2023-11-30T18:26:09Z",
+      "thumbnail": "https://i.ytimg.com/vi/x4kioQFXkOg/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/x4kioQFXkOg/oardefault.jpg"
+    },
+    {
+      "videoId": "CgEXdRb387w",
+      "videoUrl": "https://www.youtube.com/watch?v=CgEXdRb387w",
+      "title": "My calisthenics journey so far💀 #calisthenics #handstand #journey #transformation #gym #shorts",
+      "channelTitle": "Paulina Roquett",
+      "description": "",
+      "publishedAt": "2025-04-06T16:52:10Z",
+      "thumbnail": "https://i.ytimg.com/vi/CgEXdRb387w/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/CgEXdRb387w/oardefault.jpg"
     }
   ]
 }

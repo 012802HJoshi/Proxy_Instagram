@@ -3,9 +3,19 @@
   "label": "Cardio",
   "icon": "https://img.rareprob.com/img/yt-category/fitness.webp",
   "color": "#E3F7C8",
-  "updatedAt": "2026-03-29T19:58:09.621Z",
+  "updatedAt": "2026-04-15T18:43:50.812Z",
   "total": 10,
   "videos": [
+    {
+      "videoId": "YIKneTtExSg",
+      "videoUrl": "https://www.youtube.com/watch?v=YIKneTtExSg",
+      "title": "Burn BELLY FAT in a Week!! #shorts",
+      "channelTitle": "MIND WITH MUSCLE",
+      "description": "How to reduce belly fat fast?",
+      "publishedAt": "2022-11-29T06:15:09Z",
+      "thumbnail": "https://i.ytimg.com/vi/YIKneTtExSg/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/YIKneTtExSg/oardefault.jpg"
+    },
     {
       "videoId": "W5wT8zYrm3Q",
       "videoUrl": "https://www.youtube.com/watch?v=W5wT8zYrm3Q",
@@ -37,6 +47,16 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/eio2n290OPA/oardefault.jpg"
     },
     {
+      "videoId": "LXYmydHafV8",
+      "videoUrl": "https://www.youtube.com/watch?v=LXYmydHafV8",
+      "title": "No Running, No Jumping! 🏠 Burn Belly Fat at Home (Easy &amp; Effective!) #Shorts  #weightlossjourney",
+      "channelTitle": "TrimVogue",
+      "description": "10X Belly Fat Burner – At Home Workout (No Jumping!) ** Want to **lose belly fat fast** without running or jumping?",
+      "publishedAt": "2025-07-05T21:30:04Z",
+      "thumbnail": "https://i.ytimg.com/vi/LXYmydHafV8/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/LXYmydHafV8/oardefault.jpg"
+    },
+    {
       "videoId": "8m8ikxk31bE",
       "videoUrl": "https://www.youtube.com/watch?v=8m8ikxk31bE",
       "title": "Stop Running and Dieting! Try This 4-Step Fat Burning Workout Instead! #shorts #short",
@@ -57,6 +77,16 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/2INl7o6EFo8/oardefault.jpg"
     },
     {
+      "videoId": "JQwUUXojoqE",
+      "videoUrl": "https://www.youtube.com/watch?v=JQwUUXojoqE",
+      "title": "Best treadmill settings for cardio? 🏃🏻😅",
+      "channelTitle": "Chris Bumstead",
+      "description": "shorts #bodybuilding #fitness #workout #cbum #training #mrolympia.",
+      "publishedAt": "2022-12-06T21:08:01Z",
+      "thumbnail": "https://i.ytimg.com/vi/JQwUUXojoqE/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/JQwUUXojoqE/oardefault.jpg"
+    },
+    {
       "videoId": "NlvDE53lWNQ",
       "videoUrl": "https://www.youtube.com/watch?v=NlvDE53lWNQ",
       "title": "My preferred method of cardio for FAT LOSS 💪🏼 #shorts",
@@ -75,36 +105,6 @@
       "publishedAt": "2022-10-05T11:24:38Z",
       "thumbnail": "https://i.ytimg.com/vi/IF0vEJwUAUA/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/IF0vEJwUAUA/oardefault.jpg"
-    },
-    {
-      "videoId": "Rq2up3fS-_s",
-      "videoUrl": "https://www.youtube.com/watch?v=Rq2up3fS-_s",
-      "title": "Which exercise burns the most calories? 🚴🏃🏋️🧘",
-      "channelTitle": "Healthline",
-      "description": "Note: The number of calories mentioned for running is for a person who runs at 8 min/mile pace and the calories mentioned for ...",
-      "publishedAt": "2023-10-31T19:28:07Z",
-      "thumbnail": "https://i.ytimg.com/vi/Rq2up3fS-_s/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/Rq2up3fS-_s/oardefault.jpg"
-    },
-    {
-      "videoId": "5U4xf0rxj44",
-      "videoUrl": "https://www.youtube.com/watch?v=5U4xf0rxj44",
-      "title": "Walk versus running which is better for fat loss weightloss  #shorts by dr.education",
-      "channelTitle": "Dr.Education - FITNESS & NUTRITION",
-      "description": "",
-      "publishedAt": "2022-03-11T16:13:51Z",
-      "thumbnail": "https://i.ytimg.com/vi/5U4xf0rxj44/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/5U4xf0rxj44/oardefault.jpg"
-    },
-    {
-      "videoId": "Jfm_WjTLy6Y",
-      "videoUrl": "https://www.youtube.com/watch?v=Jfm_WjTLy6Y",
-      "title": "steady state or HIIT Cardio which is best",
-      "channelTitle": "Greg Doucette",
-      "description": "shorts.",
-      "publishedAt": "2021-08-08T01:00:03Z",
-      "thumbnail": "https://i.ytimg.com/vi/Jfm_WjTLy6Y/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/Jfm_WjTLy6Y/oardefault.jpg"
     }
   ]
 }
