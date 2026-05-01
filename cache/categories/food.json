@@ -3,7 +3,7 @@
   "label": "Food",
   "icon": "https://img.rareprob.com/img/yt-category/food.webp",
   "color": "#CFE8FF",
-  "updatedAt": "2026-04-15T18:43:50.666Z",
+  "updatedAt": "2026-05-01T07:20:37.820Z",
   "total": 10,
   "videos": [
     {
@@ -15,6 +15,16 @@
       "publishedAt": "2024-11-24T13:49:49Z",
       "thumbnail": "https://i.ytimg.com/vi/lVfNStAU178/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/lVfNStAU178/oardefault.jpg"
+    },
+    {
+      "videoId": "iGKR8WOsi10",
+      "videoUrl": "https://www.youtube.com/watch?v=iGKR8WOsi10",
+      "title": "Most Spicy Bhungara Beteta of Ahmedabad🥵Try on your own Risk #streetfood #shortvideo #shorts #viral",
+      "channelTitle": "Promise of Taste",
+      "description": "",
+      "publishedAt": "2023-04-21T18:01:15Z",
+      "thumbnail": "https://i.ytimg.com/vi/iGKR8WOsi10/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/iGKR8WOsi10/oardefault.jpg"
     },
     {
       "videoId": "zPxQjuFoUBc",
@@ -67,14 +77,24 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/pfEuCcjTOy0/oardefault.jpg"
     },
     {
-      "videoId": "alg9ydZDre0",
-      "videoUrl": "https://www.youtube.com/watch?v=alg9ydZDre0",
-      "title": "Fast food burrito showdown #recipe #cooking #foodasmr #food",
-      "channelTitle": "Louis Gantus",
+      "videoId": "qgwHxIXuyvQ",
+      "videoUrl": "https://www.youtube.com/watch?v=qgwHxIXuyvQ",
+      "title": "Spicy Rum Chicken 🍗 #shorts",
+      "channelTitle": "Crispy Hut",
+      "description": "Would u like to eat this? The recipe is mentioned in the comment section   #chicken #friedchicken #rumchicken #asmr #Cooking ...",
+      "publishedAt": "2025-01-12T05:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/qgwHxIXuyvQ/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/qgwHxIXuyvQ/oardefault.jpg"
+    },
+    {
+      "videoId": "2dR6SzUwbpY",
+      "videoUrl": "https://www.youtube.com/watch?v=2dR6SzUwbpY",
+      "title": "Chicken Shawarma 🥙 #shorts",
+      "channelTitle": "Great Indian Asmr",
       "description": "",
-      "publishedAt": "2025-10-15T18:46:54Z",
-      "thumbnail": "https://i.ytimg.com/vi/alg9ydZDre0/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/alg9ydZDre0/oardefault.jpg"
+      "publishedAt": "2024-04-26T12:14:16Z",
+      "thumbnail": "https://i.ytimg.com/vi/2dR6SzUwbpY/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/2dR6SzUwbpY/oardefault.jpg"
     },
     {
       "videoId": "uDhhd4tY7KE",
@@ -85,26 +105,6 @@
       "publishedAt": "2024-07-06T06:50:00Z",
       "thumbnail": "https://i.ytimg.com/vi/uDhhd4tY7KE/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/uDhhd4tY7KE/oardefault.jpg"
-    },
-    {
-      "videoId": "k58ZX_50y7o",
-      "videoUrl": "https://www.youtube.com/watch?v=k58ZX_50y7o",
-      "title": "Asian street food #shreetfood",
-      "channelTitle": "Asian Street food",
-      "description": "Asian street food I shot some popular street food videos in Asia. If you like these videos, please subscribe, thank you very much!",
-      "publishedAt": "2023-10-22T02:57:50Z",
-      "thumbnail": "https://i.ytimg.com/vi/k58ZX_50y7o/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/k58ZX_50y7o/oardefault.jpg"
-    },
-    {
-      "videoId": "qgwHxIXuyvQ",
-      "videoUrl": "https://www.youtube.com/watch?v=qgwHxIXuyvQ",
-      "title": "Spicy Rum Chicken 🍗 #shorts",
-      "channelTitle": "Crispy Hut",
-      "description": "Would u like to eat this? The recipe is mentioned in the comment section   #chicken #friedchicken #rumchicken #asmr #Cooking ...",
-      "publishedAt": "2025-01-12T05:30:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/qgwHxIXuyvQ/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/qgwHxIXuyvQ/oardefault.jpg"
     }
   ]
 }

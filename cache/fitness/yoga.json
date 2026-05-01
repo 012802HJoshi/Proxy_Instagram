@@ -3,7 +3,7 @@
   "label": "Yoga",
   "icon": "https://img.rareprob.com/img/yt-category/fitness.webp",
   "color": "#E3F7C8",
-  "updatedAt": "2026-04-15T18:43:49.699Z",
+  "updatedAt": "2026-05-01T07:20:44.230Z",
   "total": 10,
   "videos": [
     {
@@ -37,16 +37,6 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/vC8cWFbg8EY/oardefault.jpg"
     },
     {
-      "videoId": "QNi8MRpShsY",
-      "videoUrl": "https://www.youtube.com/watch?v=QNi8MRpShsY",
-      "title": "CLOCK YOGA CHALLENGE BY INDIAN GIRL🔥😲||#yoga #shorts #flexibility #trending",
-      "channelTitle": "IndiYogi",
-      "description": "",
-      "publishedAt": "2023-08-02T17:46:45Z",
-      "thumbnail": "https://i.ytimg.com/vi/QNi8MRpShsY/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/QNi8MRpShsY/oardefault.jpg"
-    },
-    {
       "videoId": "xr7JFi9ggrg",
       "videoUrl": "https://www.youtube.com/watch?v=xr7JFi9ggrg",
       "title": "Flexibility Easy Stretch Yoga Flow #shorts",
@@ -57,16 +47,6 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/xr7JFi9ggrg/oardefault.jpg"
     },
     {
-      "videoId": "5xjHpAggXsM",
-      "videoUrl": "https://www.youtube.com/watch?v=5xjHpAggXsM",
-      "title": "A gymnast who can’t do that? #shorts",
-      "channelTitle": "Elena Shinohara",
-      "description": "Socials~ INSTAGRAM: https://www.instagram.com/elena_shinohara/ TIKTOK: https://www.tiktok.com/@elenashinohara TWITCH: ...",
-      "publishedAt": "2021-06-08T18:04:05Z",
-      "thumbnail": "https://i.ytimg.com/vi/5xjHpAggXsM/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/5xjHpAggXsM/oardefault.jpg"
-    },
-    {
       "videoId": "8wYQsUbpMtc",
       "videoUrl": "https://www.youtube.com/watch?v=8wYQsUbpMtc",
       "title": "Why I’m NOT The World’s Most Flexible Girl 😭 #shorts",
@@ -75,16 +55,6 @@
       "publishedAt": "2023-11-15T14:00:10Z",
       "thumbnail": "https://i.ytimg.com/vi/8wYQsUbpMtc/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/8wYQsUbpMtc/oardefault.jpg"
-    },
-    {
-      "videoId": "B0R0hdsWOt8",
-      "videoUrl": "https://www.youtube.com/watch?v=B0R0hdsWOt8",
-      "title": "Butterfly pose (baddha konasana) benefits 👁️ #butterflypose #perineum #pelvicfloor #shorts #yoga",
-      "channelTitle": "Mays Yoga",
-      "description": "",
-      "publishedAt": "2023-05-27T18:37:45Z",
-      "thumbnail": "https://i.ytimg.com/vi/B0R0hdsWOt8/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/B0R0hdsWOt8/oardefault.jpg"
     },
     {
       "videoId": "kcJYblnDLBg",
@@ -105,6 +75,36 @@
       "publishedAt": "2023-03-18T14:17:58Z",
       "thumbnail": "https://i.ytimg.com/vi/CC-CyXux0gE/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/CC-CyXux0gE/oardefault.jpg"
+    },
+    {
+      "videoId": "xB4_LVXrbIk",
+      "videoUrl": "https://www.youtube.com/watch?v=xB4_LVXrbIk",
+      "title": "YOGA COUPLE CHALLENGE! 🧘‍♀️ #shorts",
+      "channelTitle": "Jasmin and James",
+      "description": "",
+      "publishedAt": "2025-04-19T17:10:01Z",
+      "thumbnail": "https://i.ytimg.com/vi/xB4_LVXrbIk/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/xB4_LVXrbIk/oardefault.jpg"
+    },
+    {
+      "videoId": "6eh1aeYDpe8",
+      "videoUrl": "https://www.youtube.com/watch?v=6eh1aeYDpe8",
+      "title": "Can you do this? #shorts",
+      "channelTitle": "Anna McNulty Shorts",
+      "description": "Main channel: @annamcnulty #shorts.",
+      "publishedAt": "2022-08-22T13:00:03Z",
+      "thumbnail": "https://i.ytimg.com/vi/6eh1aeYDpe8/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/6eh1aeYDpe8/oardefault.jpg"
+    },
+    {
+      "videoId": "Tm0FmR6czis",
+      "videoUrl": "https://www.youtube.com/watch?v=Tm0FmR6czis",
+      "title": "Beginner Yoga vs Intermediate Calisthenics #shorts",
+      "channelTitle": "Fit Adess",
+      "description": "",
+      "publishedAt": "2025-02-01T06:58:52Z",
+      "thumbnail": "https://i.ytimg.com/vi/Tm0FmR6czis/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/Tm0FmR6czis/oardefault.jpg"
     }
   ]
 }
