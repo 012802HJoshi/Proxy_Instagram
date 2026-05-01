@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "YouTube Shorts API" });
+  res.json({ message: "YouTube Shorts API V0.1.0" });
 });
 
 app.use("/youtube", youtubeRouter);
