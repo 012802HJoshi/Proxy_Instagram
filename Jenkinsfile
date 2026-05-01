@@ -42,13 +42,11 @@ pipeline {
 
         stage('Restart Server') {
             steps {
-               sh """
-            sudo -H -u harshitjoshi2002 bash -lc '
-                cd ${APP_DIR}
-                pm2 reload instagram-api --update-env || pm2 start npm --name instagram-api -- run start
-                pm2 save
-            '
-        """
+                sh """
+                    cd ${APP_DIR}
+                    pm2 reload instagram-api --update-env || pm2 start npm --name instagram-api -- run start
+                    pm2 save
+                """
             }
         }
     }
