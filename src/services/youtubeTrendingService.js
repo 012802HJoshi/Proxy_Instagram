@@ -24,8 +24,8 @@ const SUPPORTED_COUNTRIES = Object.values(COUNTRY_BY_DEF);
 
 /** 10 categories × 10 shorts each. Queries bias toward YouTube Shorts (#shorts + topical terms). videoDuration=short is API filter for videos under 4 min (closest to Shorts; no shorts-only flag in Search). */
 const CATEGORY_DEFS = [
-  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/games.webp", color: "#D9C7F7", query: "gaming gameplay esports clips #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "comedy skits funny viral memes #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/games.webp", color: "#D9C7F7", query: "gaming gameplay esports clips #shorts mizo", videoDuration: "short", order: "relevance" },
+  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "comedy skits funny viral memes dank", videoDuration: "short", order: "relevance" },
   { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.webp", color: "#FFD1CC",query: "new song 2025 official audio singer artist music video #shorts", videoDuration: "short", order: "relevance" },
   { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.webp", color: "#CFE8FF", query: "food recipe cooking street food ASMR #shorts youtube shorts", videoDuration: "short", order: "relevance" },
   { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.webp", color: "#E3F7C8", query: "workout fitness gym exercise home training #shorts youtube shorts", videoDuration: "short", order: "relevance" },
@@ -151,11 +151,47 @@ function pickThumbnailUrl(thumbnails) {
   return "";
 }
 
+/** Check which thumbnail URLs actually exist by sending fast HEAD requests. */
+async function findActiveThumbnail(videoId, snippetThumb) {
+  if (!videoId) {
+    return {
+      thumbnail: snippetThumb,
+      thumbnailBackup: ""
+    };
+  }
+
+  const candidates = [
+    `https://i.ytimg.com/vi/${videoId}/oar2.jpg`,
+    `https://i.ytimg.com/vi/${videoId}/oardefault.jpg`,
+    `https://i.ytimg.com/vi/${videoId}/oar1.jpg`,
+    `https://i.ytimg.com/vi/${videoId}/oar3.jpg`
+  ];
+
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(1500) });
+      if (res.ok) {
+        return {
+          thumbnail: url,
+          thumbnailBackup: snippetThumb || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+        };
+      }
+    } catch (err) {
+      // Ignore and try next format
+    }
+  }
+
+  // Fallback to standard landscape thumbnails
+  return {
+    thumbnail: snippetThumb || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+    thumbnailBackup: `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`
+  };
+}
+
 function mapVideo(item) {
   const videoId = item.id?.videoId || null;
   const thumbs = item.snippet?.thumbnails || {};
   const snippetThumb = pickThumbnailUrl(thumbs);
-  const oarBase = videoId ? `https://i.ytimg.com/vi/${videoId}` : null;
 
   return {
     videoId,
@@ -165,8 +201,9 @@ function mapVideo(item) {
     channelTitle: item.snippet?.channelTitle || "",
     description: item.snippet?.description || "",
     publishedAt: item.snippet?.publishedAt || null,
-    thumbnail: oarBase ? `${oarBase}/oar2.jpg` : snippetThumb,
-    thumbnailBackup: oarBase ? `${oarBase}/oardefault.jpg` : "",
+    thumbnail: "", // Will be dynamically resolved
+    thumbnailBackup: "", // Will be dynamically resolved
+    snippetThumb // Temporary property for resolution
   };
 }
 
@@ -184,7 +221,19 @@ async function fetchWithAnyKey(def) {
 
     if (response.ok && Array.isArray(data.items)) {
       const limit = Math.min(Number(def.maxResults) || 30, 50);
-      return data.items.map(mapVideo).slice(0, limit);
+      const mappedVideos = data.items.map(mapVideo).slice(0, limit);
+
+      // Concurrently verify and update the thumbnail fields for all videos in parallel
+      await Promise.all(
+        mappedVideos.map(async (video) => {
+          const { thumbnail, thumbnailBackup } = await findActiveThumbnail(video.videoId, video.snippetThumb);
+          video.thumbnail = thumbnail;
+          video.thumbnailBackup = thumbnailBackup;
+          delete video.snippetThumb; // Clean up temporary property
+        })
+      );
+
+      return mappedVideos;
     }
 
     lastError = `${response.status} ${data?.error?.message || response.statusText}`;

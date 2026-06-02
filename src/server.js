@@ -20,8 +20,12 @@ async function startServer() {
     console.log("Fitness subcategory refresh results (7 × 10 shorts):", fitnessResults);
   }
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+  });
+
+  server.on("error", (error) => {
+    console.error("Server error:", error.message);
   });
 }
 
@@ -29,4 +33,3 @@ startServer().catch((error) => {
   console.error("Failed to start server:", error.message);
   process.exit(1);
 });
-

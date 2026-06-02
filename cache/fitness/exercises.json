@@ -3,19 +3,9 @@
   "label": "Exercises",
   "icon": "https://img.rareprob.com/img/yt-category/fitness.webp",
   "color": "#E3F7C8",
-  "updatedAt": "2026-05-01T07:20:42.875Z",
+  "updatedAt": "2026-05-14T06:52:55.805Z",
   "total": 10,
   "videos": [
-    {
-      "videoId": "gR2_gdT_SHo",
-      "videoUrl": "https://www.youtube.com/watch?v=gR2_gdT_SHo",
-      "title": "Running 18MPH at different sizes 😳 | #Shorts",
-      "channelTitle": "SportsNation",
-      "description": "Running 18MPH at different sizes | #Shorts (via @ubrzati/Instagram) #ESPN ✔️Subscribe to ESPN+ ...",
-      "publishedAt": "2021-08-29T19:57:37Z",
-      "thumbnail": "https://i.ytimg.com/vi/gR2_gdT_SHo/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/gR2_gdT_SHo/oardefault.jpg"
-    },
     {
       "videoId": "wNpo6P26sZk",
       "videoUrl": "https://www.youtube.com/watch?v=wNpo6P26sZk",
@@ -105,6 +95,16 @@
       "publishedAt": "2023-09-30T14:52:10Z",
       "thumbnail": "https://i.ytimg.com/vi/ryZQCrZRpcQ/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/ryZQCrZRpcQ/oardefault.jpg"
+    },
+    {
+      "videoId": "PA2dgTAJvZY",
+      "videoUrl": "https://www.youtube.com/watch?v=PA2dgTAJvZY",
+      "title": "Meet Bruce Lee Kid Ryusei on little big shorts #shorts",
+      "channelTitle": "FactsWOW",
+      "description": "Meet Bruce Lee Kid Ryusei on little big shorts #shorts #BruceLee #BruceLeeKidRyusei #littlebigshorts #youtubevideos ...",
+      "publishedAt": "2022-11-08T12:51:49Z",
+      "thumbnail": "https://i.ytimg.com/vi/PA2dgTAJvZY/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/PA2dgTAJvZY/oardefault.jpg"
     }
   ]
 }
