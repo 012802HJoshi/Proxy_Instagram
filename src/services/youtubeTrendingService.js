@@ -24,16 +24,16 @@ const SUPPORTED_COUNTRIES = Object.values(COUNTRY_BY_DEF);
 
 /** 10 categories × 10 shorts each. Queries bias toward YouTube Shorts (#shorts + topical terms). videoDuration=short is API filter for videos under 4 min (closest to Shorts; no shorts-only flag in Search). */
 const CATEGORY_DEFS = [
-  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/games.webp", color: "#D9C7F7", query: "gaming gameplay esports clips #shorts mizo", videoDuration: "short", order: "relevance" },
-  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "comedy skits funny viral memes dank", videoDuration: "short", order: "relevance" },
-  { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.webp", color: "#FFD1CC",query: "new song 2025 official audio singer artist music video #shorts", videoDuration: "short", order: "relevance" },
-  { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.webp", color: "#CFE8FF", query: "food recipe cooking street food ASMR #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.webp", color: "#E3F7C8", query: "workout fitness gym exercise home training #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "tech", label: "Tech", icon: "https://img.rareprob.com/img/yt-category/tech.webp", color: "#F9D0E0", query: "tech gadgets smartphone AI review tips #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "beauty", label: "Beauty", icon: "https://img.rareprob.com/img/yt-category/makeup.webp", color: "#D4D9F8", query: "makeup beauty skincare GRWM tutorial #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "travel", label: "Travel", icon: "https://img.rareprob.com/img/yt-category/travel.webp", color: "#D2F5E9", query: "travel vlog places adventure POV trip #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "education", label: "Education", icon: "https://img.rareprob.com/img/yt-category/education.webp", color: "#FFE7B8", query: "learn facts explain how to tutorial science #shorts youtube shorts", videoDuration: "short", order: "relevance" },
-  { id: "sports", label: "Sports", icon: "https://img.rareprob.com/img/yt-category/sports.webp", color: "#F2D6FF", query: "sports highlights football basketball moments goals #shorts youtube shorts", videoDuration: "short", order: "relevance" },
+  { id: "gaming", label: "Gaming", icon: "https://img.rareprob.com/img/yt-category/games.webp", color: "#D9C7F7", query: "gaming clips compilation bgmi #shorts", videoDuration: "short", order: "relevance" },
+  { id: "comedy", label: "Comedy", icon: "https://img.rareprob.com/img/yt-category/comedy.webp", color: "#BFE9E5", query: "funny comedy skits memes #shorts", videoDuration: "short", order: "relevance" },
+  { id: "music", label: "Music", icon: "https://img.rareprob.com/img/yt-category/music.webp", color: "#FFD1CC", query: "trending song cover mashup #shorts", videoDuration: "short", order: "relevance" },
+  { id: "food", label: "Food", icon: "https://img.rareprob.com/img/yt-category/food.webp", color: "#CFE8FF", query: "satisfying food cooking recipe ASMR #shorts", videoDuration: "short", order: "relevance" },
+  { id: "fitness", label: "Fitness", icon: "https://img.rareprob.com/img/yt-category/fitness.webp", color: "#E3F7C8", query: "gym workout fitness yoga motivation #shorts", videoDuration: "short", order: "relevance" },
+  { id: "tech", label: "Tech", icon: "https://img.rareprob.com/img/yt-category/tech.webp", color: "#F9D0E0", query: "cool tech gadgets smart review #shorts", videoDuration: "short", order: "relevance" },
+  { id: "beauty", label: "Beauty", icon: "https://img.rareprob.com/img/yt-category/makeup.webp", color: "#D4D9F8", query: "makeup beauty skincare GRWM tutorial #shorts", videoDuration: "short", order: "relevance" },
+  { id: "travel", label: "Travel", icon: "https://img.rareprob.com/img/yt-category/travel.webp", color: "#D2F5E9", query: "travel vlog aesthetic places explore #shorts", videoDuration: "short", order: "relevance" },
+  { id: "education", label: "Education", icon: "https://img.rareprob.com/img/yt-category/education.webp", color: "#FFE7B8", query: "mind blowing facts science tutorial learn #shorts", videoDuration: "short", order: "relevance" },
+  { id: "sports", label: "Sports", icon: "https://img.rareprob.com/img/yt-category/sports.webp", color: "#F2D6FF", query: "sports highlights football basketball goals clips #shorts", videoDuration: "short", order: "relevance" },
 ];
 
 const SUPPORTED_CATEGORY_IDS = CATEGORY_DEFS.map((c) => c.id);
@@ -118,7 +118,9 @@ function getApiKeys() {
 }
 
 function toSearchParams(def, apiKey) {
-  const maxResults = String(def.maxResults ?? 30);
+  const requestedResults = def.maxResults ?? 30;
+  // Request double the results (up to 50 max allowed by YouTube API) to allow filtering landscape videos on the backend
+  const maxResults = String(Math.min(requestedResults * 2, 50));
   const params = new URLSearchParams({
     key: apiKey,
     part: "snippet",
@@ -156,7 +158,8 @@ async function findActiveThumbnail(videoId, snippetThumb) {
   if (!videoId) {
     return {
       thumbnail: snippetThumb,
-      thumbnailBackup: ""
+      thumbnailBackup: "",
+      isVertical: false
     };
   }
 
@@ -173,7 +176,8 @@ async function findActiveThumbnail(videoId, snippetThumb) {
       if (res.ok) {
         return {
           thumbnail: url,
-          thumbnailBackup: snippetThumb || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+          thumbnailBackup: snippetThumb || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+          isVertical: true
         };
       }
     } catch (err) {
@@ -184,7 +188,8 @@ async function findActiveThumbnail(videoId, snippetThumb) {
   // Fallback to standard landscape thumbnails
   return {
     thumbnail: snippetThumb || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-    thumbnailBackup: `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`
+    thumbnailBackup: `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
+    isVertical: false
   };
 }
 
@@ -213,6 +218,7 @@ async function fetchWithAnyKey(def) {
     throw new Error("Missing YouTube API keys. Set YOUTUBE_API_KEY and YOUTUBE_TWO_API_KEY.");
   }
 
+  const requestedLimit = Number(def.maxResults) || 30;
   let lastError = "Unknown YouTube API error";
   for (const key of keys) {
     const query = toSearchParams(def, key).toString();
@@ -220,20 +226,34 @@ async function fetchWithAnyKey(def) {
     const data = await response.json().catch(() => ({}));
 
     if (response.ok && Array.isArray(data.items)) {
-      const limit = Math.min(Number(def.maxResults) || 30, 50);
+      // Limit search results to the total fetched items (up to 50 max)
+      const limit = Math.min(requestedLimit * 2, 50);
       const mappedVideos = data.items.map(mapVideo).slice(0, limit);
 
       // Concurrently verify and update the thumbnail fields for all videos in parallel
       await Promise.all(
         mappedVideos.map(async (video) => {
-          const { thumbnail, thumbnailBackup } = await findActiveThumbnail(video.videoId, video.snippetThumb);
+          const { thumbnail, thumbnailBackup, isVertical } = await findActiveThumbnail(video.videoId, video.snippetThumb);
           video.thumbnail = thumbnail;
           video.thumbnailBackup = thumbnailBackup;
+          video.isVertical = isVertical;
           delete video.snippetThumb; // Clean up temporary property
         })
       );
 
-      return mappedVideos;
+      // Filter out non-vertical (landscape) videos to ensure relevance
+      let filtered = mappedVideos.filter((video) => video.isVertical);
+
+      // Fallback to original list if filtering left us with an empty list
+      if (filtered.length === 0) {
+        filtered = mappedVideos;
+      }
+
+      // Remove the temporary isVertical property and slice to requested limit
+      return filtered.map((video) => {
+        delete video.isVertical;
+        return video;
+      }).slice(0, requestedLimit);
     }
 
     lastError = `${response.status} ${data?.error?.message || response.statusText}`;
