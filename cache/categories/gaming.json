@@ -3,7 +3,7 @@
   "label": "Gaming",
   "icon": "https://img.rareprob.com/img/yt-category/games.webp",
   "color": "#D9C7F7",
-  "updatedAt": "2026-06-02T08:49:22.125Z",
+  "updatedAt": "2026-06-02T09:21:03.906Z",
   "total": 10,
   "videos": [
     {
@@ -37,16 +37,6 @@
       "thumbnailBackup": "https://i.ytimg.com/vi/-gyNUiuQcUo/hqdefault.jpg"
     },
     {
-      "videoId": "EXc5dqZq_6c",
-      "videoUrl": "https://www.youtube.com/watch?v=EXc5dqZq_6c",
-      "title": "New 5x SCOPE 🤡🤢 #bgmi #shorts #funny",
-      "channelTitle": "Eximo Gaming",
-      "description": "New 5x SCOPE bgmi new 5x scope bgmi best scope bgmi 5x scope voice bgmi 5x scope location bgmi 5x scope sensitivity ...",
-      "publishedAt": "2025-04-11T10:30:07Z",
-      "thumbnail": "https://i.ytimg.com/vi/EXc5dqZq_6c/oar2.jpg",
-      "thumbnailBackup": "https://i.ytimg.com/vi/EXc5dqZq_6c/hqdefault.jpg"
-    },
-    {
       "videoId": "0nGT4y0l3IY",
       "videoUrl": "https://www.youtube.com/watch?v=0nGT4y0l3IY",
       "title": "Jonathan 180° Running Car Hacker SPRAY 😱🥵 @JONATHANGAMINGYT #bgmi #pubgmobile #shorts",
@@ -55,6 +45,16 @@
       "publishedAt": "2025-01-29T02:52:51Z",
       "thumbnail": "https://i.ytimg.com/vi/0nGT4y0l3IY/oar2.jpg",
       "thumbnailBackup": "https://i.ytimg.com/vi/0nGT4y0l3IY/hqdefault.jpg"
+    },
+    {
+      "videoId": "EXc5dqZq_6c",
+      "videoUrl": "https://www.youtube.com/watch?v=EXc5dqZq_6c",
+      "title": "New 5x SCOPE 🤡🤢 #bgmi #shorts #funny",
+      "channelTitle": "Eximo Gaming",
+      "description": "New 5x SCOPE bgmi new 5x scope bgmi best scope bgmi 5x scope voice bgmi 5x scope location bgmi 5x scope sensitivity ...",
+      "publishedAt": "2025-04-11T10:30:07Z",
+      "thumbnail": "https://i.ytimg.com/vi/EXc5dqZq_6c/oar2.jpg",
+      "thumbnailBackup": "https://i.ytimg.com/vi/EXc5dqZq_6c/hqdefault.jpg"
     },
     {
       "videoId": "4hWkgC4bGqw",
