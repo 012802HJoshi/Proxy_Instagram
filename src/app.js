@@ -1,5 +1,6 @@
 const express = require("express");
 const youtubeRouter = require("./routes/youtube");
+const instagramRouter = require("./routes/instagram");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/youtube", youtubeRouter);
+app.use("/instagram", instagramRouter);
 
 module.exports = app;
 
