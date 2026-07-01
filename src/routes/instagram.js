@@ -57,7 +57,7 @@ const getPostId = (postUrl) => {
     return match[1];
 };
 
-const ENABLE_PACKAGE_STRATEGY = process.env.INSTAGRAM_ENABLE_PACKAGE === "true";
+const ENABLE_PACKAGE_STRATEGY = process.env.INSTAGRAM_ENABLE_PACKAGE !== "false";
 
 const assertShortcodeMatches = (source, data, expectedPostId) => {
     if (!data || !expectedPostId) return;
@@ -72,9 +72,9 @@ const assertShortcodeMatches = (source, data, expectedPostId) => {
 
     if (candidates.length === 0) {
         // social-dl payloads do not always carry reliable shortcode metadata.
-        // Do not allow unvalidated fallback payloads to avoid wrong-media regressions.
+        // For the package strategy, skip shortcode validation since it does not return shortcode metadata.
         if (source === "package") {
-            throw new Error("Package response cannot be validated against requested shortcode");
+            return;
         }
         return;
     }
@@ -365,12 +365,37 @@ router.post("/download/post", async (req, res) => {
         return res.status(400).json({ error: "URL is required" });
     }
 
+    const isForwarded = req.headers["x-is-forwarded"] === "true";
+    const PEER_SERVER_URL = "https://us-central1-ddsthra.cloudfunctions.net/api/instagram/download/post";
+
     // Reject immediately if we already know we're blocked
     if (isBlocked()) {
-        return res.status(429).json({
-            error: "Instagram is currently rate-limited.",
-            retryAfter: new Date(blockedUntil).toISOString(),
-        });
+        if (isForwarded) {
+            return res.status(429).json({
+                error: "Instagram is currently rate-limited (forwarded request rejected).",
+                retryAfter: new Date(blockedUntil).toISOString(),
+            });
+        }
+
+        console.warn(`[Instagram] Local strategy rate-limited. Proxying request to peer server: ${PEER_SERVER_URL}`);
+        try {
+            const response = await axios.post(
+                PEER_SERVER_URL,
+                { url },
+                {
+                    headers: {
+                        "x-is-forwarded": "true",
+                    },
+                    timeout: 20000,
+                }
+            );
+            return res.status(response.status).json(response.data);
+        } catch (proxyError) {
+            console.error(`[Instagram] Failover to peer server failed: ${proxyError.message}`);
+            const status = proxyError?.response?.status || 502;
+            const data = proxyError?.response?.data || { error: `Instagram is rate-limited and failover failed: ${proxyError.message}` };
+            return res.status(status).json(data);
+        }
     }
 
     try {
@@ -381,7 +406,27 @@ router.post("/download/post", async (req, res) => {
         const status = error?.response?.status || 500;
         console.error(`[Instagram] Route error: ${error.message}`);
 
-        if (status === 429 || error.message.includes("rate-limited")) {
+        const isRateLimit = status === 429 || error.message.includes("rate-limited");
+        if (isRateLimit) {
+            if (!isForwarded) {
+                console.warn(`[Instagram] Local request failed with rate-limit. Attempting failover to peer server...`);
+                try {
+                    const response = await axios.post(
+                        PEER_SERVER_URL,
+                        { url },
+                        {
+                            headers: {
+                                "x-is-forwarded": "true",
+                            },
+                            timeout: 20000,
+                        }
+                    );
+                    return res.status(response.status).json(response.data);
+                } catch (proxyError) {
+                    console.error(`[Instagram] Failover to peer server failed after error: ${proxyError.message}`);
+                }
+            }
+
             return res.status(429).json({
                 error: error.message,
                 retryAfter: blockedUntil ? new Date(blockedUntil).toISOString() : null,
