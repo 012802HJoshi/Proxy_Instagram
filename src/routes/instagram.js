@@ -1,440 +1,201 @@
 const express = require("express");
 const axios = require("axios");
-const qs = require("querystring");
-const { instagramDownloader } = require("social-dl");
+const cheerio = require("cheerio");
 
 const router = express.Router();
 
+/**
+ * Decrypts the obfuscated Packed JavaScript from SnapSave response.
+ * @param {string} data - Response payload from SnapSave.
+ * @returns {string|null} - Plaintext decrypted JavaScript code (containing HTML chunks).
+ */
+function decryptSnapSave(data) {
+  if (typeof data !== "string") return null;
+  const obfuscatedCode = data.replace(
+    "return decodeURIComponent(escape(r))",
+    "return JSON.stringify(r);"
+  );
+  try {
+    const jsCode = eval(obfuscatedCode);
+    return jsCode;
+  } catch (err) {
+    console.error("[Instagram] Decryption failed:", err.message);
+    return null;
+  }
+}
 
-const REQUEST_QUEUE = [];
-let IS_PROCESSING = false;
-const MIN_DELAY_MS = 8000;
-const MAX_DELAY_MS = 20000;
-const BLOCK_COOLDOWN_MS = 20 * 60 * 1000;
-let blockedUntil = null;
+/**
+ * Scrapes and extracts media details from snapsave.app
+ * @param {string} targetUrl - User submitted Instagram post or reel URL.
+ * @returns {Promise<Array>} - Extracted media items.
+ */
+async function downloadInstagramMedia(targetUrl) {
+  let url = targetUrl;
 
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const randomDelay = () =>
-    Math.floor(Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS + 1)) + MIN_DELAY_MS;
-
-const isBlocked = () => blockedUntil && Date.now() < blockedUntil;
-
-const setBlocked = () => {
-    blockedUntil = Date.now() + BLOCK_COOLDOWN_MS;
-    console.warn(`[Instagram] Hard block detected. Cooling down until ${new Date(blockedUntil).toISOString()}`);
-};
-
-// Rotate user agents to reduce fingerprinting
-const USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15",
-];
-
-const getRandomUA = () => USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
-
-// ─── Axios Instance (no aggressive retry — we handle that manually) ────────────
-const createAxiosInstance = () =>
-    axios.create({
-        timeout: 15000,
+  // 1. Follow redirects for share or short URLs (e.g. /share/ or /s/)
+  if (url.includes("/share/") || url.includes("/s/")) {
+    try {
+      const redirectRes = await axios.get(url, {
         headers: {
-            "User-Agent": getRandomUA(),
-            "Accept-Language": "en-US,en;q=0.9",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Cache-Control": "no-cache",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
         },
-    });
-
-// ─── URL Parsing ──────────────────────────────────────────────────────────────
-const getPostId = (postUrl) => {
-    if (!postUrl) throw new Error("Instagram URL was not provided");
-    const match = postUrl.match(/\/(?:reels?|p)\/(?!audio\/)([a-zA-Z0-9_-]+)/);
-    if (!match?.[1]) throw new Error("Instagram post ID was not found");
-    return match[1];
-};
-
-const ENABLE_PACKAGE_STRATEGY = process.env.INSTAGRAM_ENABLE_PACKAGE !== "false";
-
-const assertShortcodeMatches = (source, data, expectedPostId) => {
-    if (!data || !expectedPostId) return;
-
-    const candidates = [];
-    if (data?.shortcode) candidates.push(data.shortcode);
-    if (data?.code) candidates.push(data.code);
-    if (data?.graphql?.shortcode_media?.shortcode) {
-        candidates.push(data.graphql.shortcode_media.shortcode);
-    }
-    if (data?.items?.[0]?.code) candidates.push(data.items[0].code);
-
-    if (candidates.length === 0) {
-        // social-dl payloads do not always carry reliable shortcode metadata.
-        // For the package strategy, skip shortcode validation since it does not return shortcode metadata.
-        if (source === "package") {
-            return;
+        maxRedirects: 5,
+        timeout: 10000,
+      });
+      const path = redirectRes?.request?.path;
+      if (path) {
+        url = `https://www.instagram.com${path}`;
+      } else {
+        const $ = cheerio.load(redirectRes.data);
+        const alternateLink = $('link[rel="alternate"]').attr("href");
+        if (alternateLink) {
+          url = alternateLink;
         }
-        return;
+      }
+      console.log(`[Instagram] Resolved short/share redirect URL to: ${url}`);
+    } catch (err) {
+      console.error(`[Instagram] Failed to follow redirect: ${err.message}`);
     }
+  }
 
-    const matched = candidates.some((code) => code === expectedPostId);
-    if (!matched) {
-        throw new Error(
-            `Shortcode mismatch from ${source}: expected '${expectedPostId}', got '${candidates.join(",")}'`
-        );
+  // 2. Fetch from snapsave
+  const headers = {
+    accept: "application/json",
+    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    origin: "https://snapsave.app",
+    referer: "https://snapsave.app/id",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+  };
+
+  const response = await axios.post(
+    "https://snapsave.app/action.php",
+    new URLSearchParams({ url }),
+    { headers, timeout: 15000 }
+  );
+
+  if (response.status !== 200) {
+    throw new Error("Unable to fetch data from Instagram downloader service");
+  }
+
+  // 3. Decrypt response
+  const jsCode = decryptSnapSave(response.data);
+  if (!jsCode) {
+    throw new Error("Failed to decrypt response from Instagram downloader service");
+  }
+
+  if (jsCode.includes("Error: Unable to connect to Instagram server")) {
+    throw new Error("Downloader service was unable to connect to Instagram. Please retry later.");
+  }
+
+  const startIdx = jsCode.indexOf("<div");
+  if (startIdx === -1) {
+    throw new Error("No media found for this Instagram URL");
+  }
+  const endIdx = jsCode.lastIndexOf("</div>") + "</div>".length;
+  if (endIdx === -1) {
+    throw new Error("No media found for this Instagram URL");
+  }
+  const innerHTMLString = jsCode
+    .substring(startIdx, endIdx)
+    .replaceAll("\\", "");
+
+  const $ = cheerio.load(innerHTMLString);
+  const items = [];
+
+  function extractPhotoUrl(inputUrl) {
+    try {
+      const parsed = new URL(inputUrl);
+      return parsed.searchParams.get("photo") || inputUrl;
+    } catch {
+      return inputUrl;
     }
-};
+  }
 
-// ─── Fetch Strategy 1: social-dl package ─────────────────────────────────────
-const fetchFromPackage = async (url) => {
-    const result = await instagramDownloader(url);
-    if (!result?.status) throw new Error(result?.results || "Package fetch failed");
-    return { source: "package", data: result };
-};
-
-// ─── Fetch Strategy 2: Web Page (no cookies) ─────────────────────────────────
-const fetchFromWebPage = async (postUrl) => {
-    const match = postUrl.match(/\/(?:reels?|p)\/(?!audio\/)([a-zA-Z0-9_-]+)/);
-    if (!match?.[1]) throw new Error("Instagram valid post URL was not found");
-
-    const axiosInstance = createAxiosInstance();
-    const targetUrl = `https://www.instagram.com/p/${match[1]}/?__a=1&__d=dis`;
-    const response = await axiosInstance.get(targetUrl);
-
-    if (!response.data || response.data.require_login) {
-        throw new Error("Web page fetch returned login wall");
-    }
-    return { source: "webpage", data: response.data };
-};
-
-// ─── Fetch Strategy 3: GraphQL API ───────────────────────────────────────────
-// NOTE: The tokens below expire. If GraphQL consistently fails, they need refreshing
-// by visiting instagram.com and extracting updated values from network requests.
-const fetchFromGraphQL = async (postId) => {
-    const axiosInstance = createAxiosInstance();
-
-    const requestData = {
-        av: "0",
-        __d: "www",
-        __user: "0",
-        __a: "1",
-        __req: "3",
-        __hs: "19624.HYP:instagram_web_pkg.2.1..0.0",
-        dpr: "3",
-        __ccg: "UNKNOWN",
-        __rev: "1008824440",
-        __s: "xf44ne:zhh75g:xr51e7",
-        __hsi: "7282217488877343271",
-        __dyn:
-            "7xeUmwlEnwn8K2WnFw9-2i5U4e0yoW3q32360CEbo1nEhw2nVE4W0om78b87C0yE5ufz81s8hwGwQwoEcE7O2l0Fwqo31w9a9x-0z8-U2zxe2GewGwso88cobEaU2eUlwhEe87q7-0iK2S3qazo7u1xwIw8O321LwTwKG1pg661pwr86C1mwraCg",
-        __csr:
-            "gZ3yFmJkillQvV6ybimnG8AmhqujGbLADgjyEOWz49z9XDlAXBJpC7Wy-vQTSvUGWGh5u8KibG44dBiigrgjDxGjU0150Q0848azk48N09C02IR0go4SaR70r8owyg9pU0V23hwiA0LQczA48S0f-x-27o05NG0fkw",
-        __comet_req: "7",
-        lsd: "AVqbxe3J_YA",
-        jazoest: "2957",
-        __spin_r: "1008824440",
-        __spin_b: "trunk",
-        __spin_t: "1695523385",
-        fb_api_caller_class: "RelayModern",
-        fb_api_req_friendly_name: "PolarisPostActionLoadPostQueryQuery",
-        variables: JSON.stringify({
-            shortcode: postId,
-            fetch_comment_count: "null",
-            fetch_related_profile_media_count: "null",
-            parent_comment_count: "null",
-            child_comment_count: "null",
-            fetch_like_count: "null",
-            fetch_tagged_user_count: "null",
-            fetch_preview_comment_count: "null",
-            has_threaded_comments: "false",
-            hoisted_comment_id: "null",
-            hoisted_reply_id: "null",
-        }),
-        server_timestamps: "true",
-        doc_id: "10015901848480474",
-    };
-
-    const response = await axiosInstance.post(
-        "https://www.instagram.com/api/graphql",
-        qs.stringify(requestData),
-        {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Sec-Fetch-Site": "same-origin",
-                "X-FB-LSD": "AVqbxe3J_YA",
-                "User-Agent": getRandomUA(),
-            },
+  $(".row").each((index, rowElement) => {
+    $(rowElement)
+      .find(".download-items")
+      .each((idx, downloadItem) => {
+        let thumbnail = $(downloadItem).find("img").attr("src");
+        if (thumbnail && thumbnail.includes("https://snapinsta.app/photo.php?photo=")) {
+          thumbnail = extractPhotoUrl(thumbnail);
         }
-    );
 
-    const contentType = response.headers["content-type"];
-    if (contentType !== "text/javascript; charset=utf-8") {
-        throw new Error(`GraphQL unexpected content-type: ${contentType}`);
-    }
+        let downloadLink = $(downloadItem)
+          .find("a")
+          .attr("href")
+          ?.replaceAll("&dl=1", "");
+        if (downloadLink && downloadLink.includes("https://snapinsta.app/photo.php?photo=")) {
+          downloadLink = extractPhotoUrl(downloadLink);
+        }
 
-    if (!response.data?.data) throw new Error("GraphQL response missing data");
-    return { source: "graphql", data: response.data.data.xdt_shortcode_media };
-};
+        let mediaType = $(downloadItem)
+          .find(".download-items__btn span")
+          .text()
+          .trim()
+          .replace("Download ", "")
+          .toLowerCase();
 
-// ─── Media Detail Normalization ───────────────────────────────────────────────
-const normalizeMedia = ({ source, data }) => {
-    // Strategy 1: social-dl package
-    if (source === "package") {
-        return data.results.map((post) => ({
-            type: post.type,
-            thumb: post.thumbnail,
+        // Fallback for mediaType detection
+        if (!mediaType) {
+          if (downloadLink && (downloadLink.includes(".mp4") || downloadLink.includes("video"))) {
+            mediaType = "video";
+          } else {
+            mediaType = "photo";
+          }
+        }
+
+        if (mediaType === "image" || mediaType === "photo") {
+          mediaType = "photo";
+        }
+
+        if (downloadLink) {
+          items.push({
+            type: mediaType === "video" ? "video" : "photo",
+            thumb: thumbnail || "",
             duration: null,
             has_audio: null,
-            variants: post.variants.map((v) => ({
+            variants: [
+              {
                 bitrate: null,
-                content_type: post.type === "video" ? "video/mp4" : "image/jpg",
-                quality: v.quality,
-                url: v.url,
-            })),
-        }));
-    }
-
-    // Strategy 2: Web page (with cookies — items[] format)
-    if (source === "webpage" && data.items) {
-        const item = data.items[0];
-        if (item.media_type === 1) {
-            return [{
-                type: "photo",
-                thumb: item.image_versions2.candidates[0].url,
-                duration: null,
-                has_audio: !!item.music_metadata?.audio_type,
-                variants: item.image_versions2.candidates.map((v) => ({
-                    bitrate: null,
-                    content_type: "image/jpg",
-                    quality: `${v.height}p`,
-                    url: v.url,
-                })),
-            }];
-        } else if (item.media_type === 2) {
-            return [{
-                type: "video",
-                thumb: item.image_versions2.candidates[0].url,
-                duration: item.video_duration,
-                has_audio: item.has_audio,
-                variants: item.video_versions
-                    .map((v) => ({ bitrate: null, content_type: "video/mp4", quality: `${v.height}p`, url: v.url }))
-                    .filter((v, i, arr) => i === arr.findIndex((x) => x.quality === v.quality)),
-            }];
-        } else {
-            return item.carousel_media.map((post) => {
-                if (post.media_type === 1) {
-                    return {
-                        type: "photo",
-                        thumb: post.image_versions2.candidates[0].url,
-                        duration: null,
-                        has_audio: !!item.music_metadata?.audio_type,
-                        variants: post.image_versions2.candidates.map((v) => ({
-                            bitrate: null, content_type: "image/jpg", quality: `${v.height}p`, url: v.url,
-                        })),
-                    };
-                }
-                return {
-                    type: "video",
-                    thumb: post.image_versions2.candidates[0].url,
-                    duration: post.video_duration,
-                    has_audio: !!item.music_metadata?.audio_type,
-                    variants: post.video_versions
-                        .map((v) => ({ bitrate: null, content_type: "video/mp4", quality: `${v.height}p`, url: v.url }))
-                        .filter((v, i, arr) => i === arr.findIndex((x) => x.quality === v.quality)),
-                };
-            });
+                content_type: mediaType === "video" ? "video/mp4" : "image/jpg",
+                quality: "HD",
+                url: downloadLink,
+              },
+            ],
+          });
         }
-    }
+      });
+  });
 
-    // Strategy 2: Web page (no cookies — graphql format)
-    if (source === "webpage" && data.graphql) {
-        const media = data.graphql.shortcode_media;
-        if (media.__typename === "GraphImage") {
-            return [{ type: "photo", thumb: media.display_url, duration: null, variants: [{ bitrate: null, content_type: "image/jpg", quality: `${media.dimensions.height}p`, url: media.display_url }] }];
-        } else if (media.__typename === "GraphVideo") {
-            return [{ type: "video", thumb: media.display_url, duration: media.video_duration, variants: [{ bitrate: null, content_type: "video/mp4", quality: `${media.dimensions.height}p`, url: media.video_url }] }];
-        } else {
-            return media.edge_sidecar_to_children.edges.map(({ node }) =>
-                node.__typename === "GraphImage"
-                    ? { type: "photo", thumb: node.display_url, duration: null, variants: [{ bitrate: null, content_type: "image/jpg", quality: `${node.dimensions.height}p`, url: node.display_url }] }
-                    : { type: "video", thumb: node.display_url, duration: null, variants: [{ bitrate: null, content_type: "video/mp4", quality: `${node.dimensions.height}p`, url: node.video_url }] }
-            );
-        }
-    }
+  if (items.length === 0) {
+    throw new Error("No download links parsed from downloader response");
+  }
 
-    // Strategy 3: GraphQL API (XDT format)
-    if (source === "graphql") {
-        if (data.__typename === "XDTGraphImage") {
-            return [{ type: "photo", thumb: data.display_url, duration: null, has_audio: null, variants: [{ bitrate: null, content_type: "image/jpg", quality: "N/A", url: data.display_url }] }];
-        } else if (data.__typename === "XDTGraphVideo") {
-            return [{ type: "video", thumb: data.display_url, duration: data.video_duration * 1000, has_audio: data.has_audio, variants: [{ bitrate: null, content_type: "video/mp4", quality: "HD", url: data.video_url }] }];
-        } else {
-            return data.edge_sidecar_to_children.edges.map(({ node }) =>
-                node.__typename === "XDTGraphImage"
-                    ? { type: "photo", thumb: node.display_url, duration: null, has_audio: null, variants: [{ bitrate: null, content_type: "image/jpg", quality: "N/A", url: node.display_url }] }
-                    : { type: "video", thumb: node.display_url, duration: node.video_duration * 1000, has_audio: node.has_audio, variants: [{ bitrate: null, content_type: "video/mp4", quality: "HD", url: node.video_url }] }
-            );
-        }
-    }
-
-    throw new Error("Unable to normalize media: unknown source/format");
-};
-
-// ─── Core Fetch with Fallback Chain ──────────────────────────────────────────
-const fetchWithFallback = async (url) => {
-    const postId = getPostId(url);
-    const strategies = [
-        // Deterministic sources first; package is optional fallback only.
-        { name: "graphql", fn: () => fetchFromGraphQL(postId) },
-        { name: "webpage", fn: () => fetchFromWebPage(url) },
-    ];
-
-    if (ENABLE_PACKAGE_STRATEGY) {
-        strategies.push({ name: "package", fn: () => fetchFromPackage(url) });
-    }
-
-    for (const strategy of strategies) {
-        try {
-            console.log(`[Instagram] Trying strategy: ${strategy.name}`);
-            const result = await strategy.fn();
-            assertShortcodeMatches(result.source, result.data, postId);
-            console.log(`[Instagram] Success with strategy: ${strategy.name}`);
-            return result;
-        } catch (err) {
-            // Detect hard block (429 / 401 / checkpoint)
-            const status = err?.response?.status;
-            if (status === 429 || status === 401 || err.message?.includes("checkpoint")) {
-                setBlocked();
-                throw new Error("Instagram rate limit hit. Please retry later.");
-            }
-            console.warn(`[Instagram] Strategy '${strategy.name}' failed: ${err.message}`);
-        }
-    }
-
-    throw new Error("All fetch strategies exhausted");
-};
-
-// ─── Request Queue Processor ──────────────────────────────────────────────────
-const processQueue = async () => {
-    if (IS_PROCESSING || REQUEST_QUEUE.length === 0) return;
-    IS_PROCESSING = true;
-
-    while (REQUEST_QUEUE.length > 0) {
-        if (isBlocked()) {
-            const waitMs = blockedUntil - Date.now();
-            console.warn(`[Instagram] Blocked. Queue waiting ${Math.round(waitMs / 1000)}s...`);
-            // Reject all queued requests immediately rather than holding connections open
-            while (REQUEST_QUEUE.length > 0) {
-                const { reject } = REQUEST_QUEUE.shift();
-                reject(new Error(`Instagram is rate-limited. Please try again after ${new Date(blockedUntil).toLocaleTimeString()}.`));
-            }
-            break;
-        }
-
-        const { url, resolve, reject } = REQUEST_QUEUE.shift();
-        try {
-            const result = await fetchWithFallback(url);
-            resolve(result);
-        } catch (err) {
-            reject(err);
-        }
-
-        if (REQUEST_QUEUE.length > 0) {
-            const delay = randomDelay();
-            console.log(`[Instagram] Waiting ${delay}ms before next request...`);
-            await sleep(delay);
-        }
-    }
-
-    IS_PROCESSING = false;
-};
-
-const enqueueRequest = (url) =>
-    new Promise((resolve, reject) => {
-        REQUEST_QUEUE.push({ url, resolve, reject });
-        processQueue();
-    });
+  return items;
+}
 
 // ─── Route ────────────────────────────────────────────────────────────────────
 router.post("/download/post", async (req, res) => {
-    const { url } = req.body;
+  const { url } = req.body;
 
-    if (!url) {
-        return res.status(400).json({ error: "URL is required" });
-    }
+  if (!url) {
+    return res.status(400).json({ error: "URL is required" });
+  }
 
-    const isForwarded = req.headers["x-is-forwarded"] === "true";
-    const PEER_SERVER_URL = "https://us-central1-ddsthra.cloudfunctions.net/api/instagram/download/post";
+  const cleanUrl = url.trim();
+  if (!cleanUrl.match(/^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv|stories|share|s)(\/[a-zA-Z0-9_.-]*)?\/?/i)) {
+    return res.status(400).json({ error: "Invalid Instagram URL format" });
+  }
 
-    // Reject immediately if we already know we're blocked
-    if (isBlocked()) {
-        if (isForwarded) {
-            return res.status(429).json({
-                error: "Instagram is currently rate-limited (forwarded request rejected).",
-                retryAfter: new Date(blockedUntil).toISOString(),
-            });
-        }
-
-        console.warn(`[Instagram] Local strategy rate-limited. Proxying request to peer server: ${PEER_SERVER_URL}`);
-        try {
-            const response = await axios.post(
-                PEER_SERVER_URL,
-                { url },
-                {
-                    headers: {
-                        "x-is-forwarded": "true",
-                    },
-                    timeout: 20000,
-                }
-            );
-            return res.status(response.status).json(response.data);
-        } catch (proxyError) {
-            console.error(`[Instagram] Failover to peer server failed: ${proxyError.message}`);
-            const status = proxyError?.response?.status || 502;
-            const data = proxyError?.response?.data || { error: `Instagram is rate-limited and failover failed: ${proxyError.message}` };
-            return res.status(status).json(data);
-        }
-    }
-
-    try {
-        const postData = await enqueueRequest(url);
-        const mediaDetails = normalizeMedia(postData);
-        return res.status(200).json(mediaDetails);
-    } catch (error) {
-        const status = error?.response?.status || 500;
-        console.error(`[Instagram] Route error: ${error.message}`);
-
-        const isRateLimit = status === 429 || error.message.includes("rate-limited");
-        if (isRateLimit) {
-            if (!isForwarded) {
-                console.warn(`[Instagram] Local request failed with rate-limit. Attempting failover to peer server...`);
-                try {
-                    const response = await axios.post(
-                        PEER_SERVER_URL,
-                        { url },
-                        {
-                            headers: {
-                                "x-is-forwarded": "true",
-                            },
-                            timeout: 20000,
-                        }
-                    );
-                    return res.status(response.status).json(response.data);
-                } catch (proxyError) {
-                    console.error(`[Instagram] Failover to peer server failed after error: ${proxyError.message}`);
-                }
-            }
-
-            return res.status(429).json({
-                error: error.message,
-                retryAfter: blockedUntil ? new Date(blockedUntil).toISOString() : null,
-            });
-        }
-
-        return res.status(status).json({ error: error.message || "Internal Server Error" });
-    }
+  try {
+    console.log(`[Instagram] Executing downloader strategy for: ${cleanUrl}`);
+    const mediaDetails = await downloadInstagramMedia(cleanUrl);
+    return res.status(200).json(mediaDetails);
+  } catch (error) {
+    console.error(`[Instagram] Route error: ${error.message}`);
+    const status = error.message.includes("Unable to connect") || error.message.includes("parsed") ? 502 : 500;
+    return res.status(status).json({ error: error.message || "Internal Server Error" });
+  }
 });
 
 module.exports = router;
