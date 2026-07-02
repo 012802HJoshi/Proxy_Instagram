@@ -183,7 +183,7 @@ router.post("/download/post", async (req, res) => {
   }
 
   const cleanUrl = url.trim();
-  if (!cleanUrl.match(/^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv|stories|share|s)(\/[a-zA-Z0-9_.-]*)?\/?/i)) {
+  if (!cleanUrl.match(/^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9_.-]+\/)?(p|reel|tv|stories|share|s)(\/[a-zA-Z0-9_.-]*)?\/?/i)) {
     return res.status(400).json({ error: "Invalid Instagram URL format" });
   }
 
