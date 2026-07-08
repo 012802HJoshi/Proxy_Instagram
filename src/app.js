@@ -1,6 +1,7 @@
 const express = require("express");
 const youtubeRouter = require("./routes/youtube");
 const instagramRouter = require("./routes/instagram");
+const exchangeRouter = require("./routes/exchange");
 
 const app = express();
 
@@ -15,6 +16,6 @@ app.get("/", (req, res) => {
 
 app.use("/youtube", youtubeRouter);
 app.use("/instagram", instagramRouter);
-
+app.use("/exchange", exchangeRouter);
 module.exports = app;
 
