@@ -9,7 +9,7 @@ pipeline {
 
         stage('Environment Setup') {
             steps {
-                withCredentials([file(credentialsId: 'ENV_PRODUCTION', variable: 'ENV_FILE')]) {
+                withCredentials([file(credentialsId: 'PROXY_ENV', variable: 'ENV_FILE')]) {
                     sh '''
                         cp $ENV_FILE .env
                         chmod 644 .env
