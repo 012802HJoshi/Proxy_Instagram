@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "YouTube Shorts API V0.1.0" });
+  res.json({ message: "YouTube Shorts API V0.2.1" });
 });
 
 app.use("/youtube", youtubeRouter);

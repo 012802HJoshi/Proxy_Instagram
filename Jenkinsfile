@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         APP_DIR = "/var/www/proxy-downloader"
+        PATH = "/usr/local/bin:/usr/bin:/bin:${env.PATH}"
     }
 
     stages {
