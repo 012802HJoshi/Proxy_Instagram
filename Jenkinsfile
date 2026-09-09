@@ -45,7 +45,7 @@ pipeline {
             steps {
                 sh """
                     cd ${APP_DIR}
-                    pm2 reload instagram-api --update-env || pm2 start npm --name instagram-api -- run start
+                    pm2 reload instagram-api --update-env || pm2 start src/server.js --name instagram-api
                     pm2 save
                 """
             }
